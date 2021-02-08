@@ -8,7 +8,7 @@ def create(num):
     print("Creation du fichier " + str(num) + ".json")
     
     f = open("levels/" + str(num) + ".json", "w")
-    lvl = random()
+    lvl = randomlvl()
     f.write(json.dumps(lvl))
 
 def load(num):
