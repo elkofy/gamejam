@@ -5,6 +5,7 @@ from pygame.locals import*
 from globals import *
 import player
 from player import *
+import showLevel
 
 globals.WIN = pygame.display.set_mode((globals.WIDTH, globals.HEIGHT));
 pygame.display.set_caption("Game Jam 2021");
@@ -14,6 +15,8 @@ player = Player()
 
 def main():
     run = True
+    globals.WIN.fill(colors.GREY)
+    showLevel.show(1)
     while run:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
