@@ -25,7 +25,7 @@ def randomlvl():
     for i in range(globals.GAME_HEIGHT):
         lvl.append([])
         for j in range(globals.GAME_WIDTH):
-            lvl[i].append(objects.mur if random.randint(1, 100) > 75 else 0)
+            lvl[i].append(1 if random.randint(1, 100) > 75 else 0)
     return lvl
 
 def show(lvl):

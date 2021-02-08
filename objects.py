@@ -12,4 +12,4 @@ c = object(colors.GREEN)
 d = object(colors.YELLOW)
 e = object(colors.BLUE)
 
-objArr = [a, b, c, d, e]
+objArr = [mur, a, b, c, d, e]
