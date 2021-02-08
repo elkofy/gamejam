@@ -1,8 +1,10 @@
 import pygame
+from pygame.locals import*
 import globals
 
+
 class Player:
-    x = 0
+    x = 0 #en unité jeu
     y = 0
     img = pygame.image.load('assets/player.png')
     rect = None
@@ -18,6 +20,12 @@ class Player:
 
         globals.WIN.blit(self.img, self.rect)
     
-    def move(self, x, y):
-        None
-    
+    def move(self, keypressed):
+        if keypressed == K_w or keypressed == K_UP:
+            self.rect.move(self.x, self.y + globals.OBJECT_HEIGHT)
+        elif keypressed == K_s or keypressed == K_DOWN:
+            print("move down")
+        elif keypressed == K_a or keypressed == K_LEFT:
+            print("left")
+        elif keypressed == K_d or keypressed == K_RIGHT:
+            print("move right")    

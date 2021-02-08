@@ -18,7 +18,7 @@ def main():
     globals.WIN.fill(colors.GREY)
     level.create(420)
     lvl = level.load(420)
-    level.cli(lvl)
+    #level.cli(lvl)
     level.show(lvl)
     player.load(4, 6)
     while run:
@@ -26,9 +26,7 @@ def main():
             if event.type == pygame.QUIT:
                 run = False
             elif event.type == KEYDOWN:
-                print("here")
-                if event.type == K_w:
-                    print("z")
+                player.move(event.key)
         pygame.display.update()
     pygame.quit()
 
