@@ -1,8 +1,7 @@
-import main
 import levelLoader
 import pygame
-import colors
 import objects
+import globals
 
 def show(num):
     level = levelLoader.loadLevel(num)
@@ -16,7 +15,7 @@ def show(num):
             obj = objects.objArr[level[y][x]]
             rect = pygame.Rect(objW * x, objH * y, objW, objH)
             if (level[y][x]):
-                pygame.draw.rect(main.WIN, obj.color, rect)
+                pygame.draw.rect(globals.WIN, obj.color, rect)
                 print("@", end='')
             else :
                 print(" ", end='')

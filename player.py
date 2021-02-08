@@ -17,3 +17,6 @@ class Player:
         self.y = y
         globals.WIN.blit(self.img, self.rect);
     
+    def move(self, x, y):
+        None
+    

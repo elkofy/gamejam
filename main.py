@@ -16,7 +16,8 @@ player = Player()
 def main():
     run = True
     globals.WIN.fill(colors.GREY)
-    showLevel.show(1)
+    #showLevel.show(1)
+    player.load(globals.WIDTH/2, globals.HEIGHT/2)
     while run:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -25,10 +26,6 @@ def main():
                 print("here")
                 if event.type == K_w:
                     print("z")
-
-
-        globals.WIN.fill(colors.GREY)
-        player.load(globals.WIDTH/2, globals.HEIGHT/2)
         pygame.display.update()
     pygame.quit()
 
