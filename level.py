@@ -20,12 +20,12 @@ def load(num):
 
     return lvl
 
-def random():
+def randomlvl():
     lvl = []
     for i in range(globals.GAME_HEIGHT):
-        arr.append([])
+        lvl.append([])
         for j in range(globals.GAME_WIDTH):
-            arr[i].append(random.randint(0, len(objects.objArr + 1)))
+            lvl[i].append(random.randint(0, len(objects.objArr)))
     return lvl
 
 def show(lvl):

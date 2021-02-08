@@ -16,7 +16,7 @@ player = Player()
 def main():
     run = True
     globals.WIN.fill(colors.GREY)
-    lvl = level.load(1)
+    lvl = level.randomlvl()
     level.cli(lvl)
     level.show(lvl)
     player.load(globals.WIDTH/2, globals.HEIGHT/2)
