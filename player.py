@@ -10,7 +10,7 @@ class Player:
     img = pygame.image.load('assets/player.png')
     rect = None
     speed = 5
-    energie = 5
+    energie = MAX_ENERGY
 
     def load(self, x, y):
         self.img = pygame.transform.scale(self.img, (globals.OBJECT_WIDTH, globals.OBJECT_HEIGHT))

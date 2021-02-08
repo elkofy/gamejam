@@ -7,7 +7,7 @@ OBJECT_HEIGHT = int(HEIGHT / GAME_HEIGHT)
 ZOOM = 40 # en %
 WIN = None
 LVL = None
-
+MAX_ENERGY = 10
 def calcX(x):
     return OBJECT_WIDTH * x
 

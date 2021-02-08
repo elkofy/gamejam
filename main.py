@@ -6,7 +6,7 @@ from globals import *
 import player
 from player import *
 import level
-
+import energy__bar
 globals.WIN = pygame.display.set_mode((globals.WIDTH, globals.HEIGHT));
 pygame.display.set_caption("Game Jam 2021");
 
@@ -28,6 +28,7 @@ def main():
             elif event.type == KEYDOWN:
                 player.move(event.key)
         player.draw()
+        energy__bar.draw_bar(player.energie)
         pygame.display.flip()
     pygame.quit()
 
