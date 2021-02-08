@@ -1,3 +1,13 @@
 WIDTH = 1024
 HEIGHT = 728
+GAME_WIDTH = 30
+GAME_HEIGHT = 20
+OBJECT_WIDTH = WIDTH / GAME_WIDTH
+OBJECT_HEIGHT = HEIGHT / GAME_HEIGHT
 WIN = None
+
+def calcX(x):
+    return OBJECT_WIDTH * x
+
+def calcY(y):
+    return OBJECT_HEIGHT * y

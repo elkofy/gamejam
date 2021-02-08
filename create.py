@@ -1,13 +1,14 @@
 import json
 import random
+import globals
 
 f = open("levels/1.json", "w")
 
 arr = []
 
-for i in range(10):
+for i in range(globals.GAME_HEIGHT):
     arr.append([])
-    for j in range(20):
+    for j in range(globals.GAME_WIDTH):
         arr[i].append(random.randint(0, 4))
 
 print(arr)

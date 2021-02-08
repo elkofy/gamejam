@@ -16,7 +16,7 @@ player = Player()
 def main():
     run = True
     globals.WIN.fill(colors.GREY)
-    #showLevel.show(1)
+    showLevel.show(1)
     player.load(globals.WIDTH/2, globals.HEIGHT/2)
     while run:
         for event in pygame.event.get():
