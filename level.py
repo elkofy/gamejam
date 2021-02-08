@@ -25,14 +25,14 @@ def randomlvl():
     for i in range(globals.GAME_HEIGHT):
         lvl.append([])
         for j in range(globals.GAME_WIDTH):
-            lvl[i].append(random.randint(0, len(objects.objArr)))
+            lvl[i].append(objects.mur if random.randint(1, 100) > 75 else 0)
     return lvl
 
 def show(lvl):
     for y in range(len(lvl)):
         for x in range(len(lvl[y])):
             if (lvl[y][x]):
-                obj = objects.objArr[lvl[y][x] - 1]
+                obj = objects.mur
                 rect = pygame.Rect(globals.calcX(x), globals.calcY(y), globals.OBJECT_WIDTH, globals.OBJECT_HEIGHT)
                 pygame.draw.rect(globals.WIN, obj.color, rect)
 

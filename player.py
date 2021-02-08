@@ -9,13 +9,14 @@ class Player:
     speed = 5
 
     def load(self, x, y):
-        self.img = pygame.transform.scale(self.img, (100, 100))
+        self.img = pygame.transform.scale(self.img, (globals.OBJECT_WIDTH, globals.OBJECT_HEIGHT))
         self.img.convert()
-        self.rect = self.img.get_rect()
-        self.rect.center = x, y
+        self.rect = pygame.Rect(globals.calcX(x), globals.calcY(y), globals.GAME_WIDTH, globals.GAME_HEIGHT)
+
         self.x = x
         self.y = y
-        globals.WIN.blit(self.img, self.rect);
+
+        globals.WIN.blit(self.img, self.rect)
     
     def move(self, x, y):
         None
