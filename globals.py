@@ -8,6 +8,8 @@ ZOOM = 40 # en %
 WIN = None
 LVL = None
 MAX_ENERGY = 10
+#pixel_font = pygame.font.Font("assets/pixel_font.ttf", 26)
+
 def calcX(x):
     return OBJECT_WIDTH * x
 
