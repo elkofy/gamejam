@@ -27,14 +27,18 @@ class Player:
     
     def move(self, keypressed):
         if keypressed == K_w or keypressed == K_UP:
-            self.rect.move_ip(0, 0 - globals.OBJECT_HEIGHT)
-            self.y -= 1
+            if not isWall(self.x, self.y -1):
+                self.rect.move_ip(0, 0 - globals.OBJECT_HEIGHT)
+                self.y -= 1
         elif keypressed == K_s or keypressed == K_DOWN:
-            self.rect.move_ip(0, 0 + globals.OBJECT_HEIGHT)
-            self.y += 1
+            if not isWall(self.x, self.y +1):
+                self.rect.move_ip(0, 0 + globals.OBJECT_HEIGHT)
+                self.y += 1
         elif keypressed == K_a or keypressed == K_LEFT:
-            self.rect.move_ip(0 - globals.OBJECT_WIDTH, 0)
-            self.x -= 1
+            if not isWall(self.x -1, self.y):
+                self.rect.move_ip(0 - globals.OBJECT_WIDTH, 0)
+                self.x -= 1
         elif keypressed == K_d or keypressed == K_RIGHT:
-            self.rect.move_ip(0 + globals.OBJECT_WIDTH, 0)
-            self.x += 1
+            if not isWall(self.x + 1, self.y):
+                self.rect.move_ip(0 + globals.OBJECT_WIDTH, 0)
+                self.x += 1

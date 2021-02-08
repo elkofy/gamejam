@@ -15,13 +15,13 @@ player = Player()
 
 def main():
     run = True
-    globals.WIN.fill(colors.GREY)
     #level.create(420)
-    lvl = level.load(420)
-    #level.cli(lvl)
+    globals.LVL = level.load(420)
+    #level.cli(globals.lvl)
     player.load(4, 6)
     while run:
-        level.show(lvl)
+        globals.WIN.fill(colors.GREY)
+        level.show(globals.LVL)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
