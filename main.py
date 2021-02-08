@@ -15,7 +15,7 @@ player = Player()
 pygame.font.init()
 def main():
     run = True
-    # level.create(420)
+    globals.changeView(4, 6)
     globals.LVL = level.load(2)
     # level.cli(globals.lvl)
     player.load(4, 6)
@@ -27,6 +27,7 @@ def main():
                 run = False
             elif event.type == KEYDOWN:
                 player.move(event.key)
+                globals.changeView(player.x, player.y)
         player.draw()
         energy_bar.draw_bar(player.energie)
         pygame.display.flip()

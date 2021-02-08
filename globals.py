@@ -1,10 +1,11 @@
 WIDTH = 1024
 HEIGHT = 728
 GAME_WIDTH = 30
-GAME_HEIGHT = 20
-OBJECT_WIDTH = int(WIDTH / GAME_WIDTH)
-OBJECT_HEIGHT = int(HEIGHT / GAME_HEIGHT)
-ZOOM = 40 # en %
+GAME_HEIGHT = GAME_WIDTH
+OBJECT_WIDTH = 60
+OBJECT_HEIGHT = OBJECT_WIDTH
+marginTop = None
+marginLeft = None
 WIN = None
 LVL = None
 MAX_ENERGY = 10
@@ -21,3 +22,9 @@ def isWall(x, y):
         return True
     else:
         return False
+
+def changeView(x, y):
+    global marginLeft
+    global marginTop
+    marginLeft = calcX(x) - (WIDTH / 2) + OBJECT_WIDTH / 2
+    marginTop = calcY(y) - (HEIGHT / 2) + OBJECT_HEIGHT / 2

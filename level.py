@@ -33,7 +33,7 @@ def show(lvl):
         for x in range(len(lvl[y])):
             if (lvl[y][x]):
                 obj = objects.mur
-                rect = pygame.Rect(globals.calcX(x), globals.calcY(y), globals.OBJECT_WIDTH, globals.OBJECT_HEIGHT)
+                rect = pygame.Rect(globals.calcX(x) - globals.marginLeft, globals.calcY(y) - globals.marginTop, globals.OBJECT_WIDTH, globals.OBJECT_HEIGHT)
                 pygame.draw.rect(globals.WIN, obj.color, rect)
 
 def cli(lvl):

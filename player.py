@@ -16,7 +16,7 @@ class Player:
         self.img = pygame.transform.scale(self.img, (globals.OBJECT_WIDTH, globals.OBJECT_HEIGHT))
         self.img.convert()
         self.rect = self.img.get_rect()
-        self.rect.move_ip(calcX(x), calcY(y))
+        self.rect.move_ip(calcX(x) - globals.marginLeft, calcY(y) - globals.marginTop)
 
         self.x = x
         self.y = y
@@ -34,21 +34,17 @@ class Player:
     def move(self, keypressed):
         if keypressed == K_w or keypressed == K_UP:
             if not isWall(self.x, self.y -1):
-                self.rect.move_ip(0, 0 - globals.OBJECT_HEIGHT)
                 self.y -= 1
                 self.energie -=1
         elif keypressed == K_s or keypressed == K_DOWN:
             if not isWall(self.x, self.y +1):
-                self.rect.move_ip(0, 0 + globals.OBJECT_HEIGHT)
                 self.y += 1
                 self.energie -=1
         elif keypressed == K_a or keypressed == K_LEFT:
             if not isWall(self.x -1, self.y):
-                self.rect.move_ip(0 - globals.OBJECT_WIDTH, 0)
                 self.x -= 1
                 self.energie -=1
         elif keypressed == K_d or keypressed == K_RIGHT:
             if not isWall(self.x + 1, self.y):
-                self.rect.move_ip(0 + globals.OBJECT_WIDTH, 0)
                 self.x += 1     
                 self.energie -=1
