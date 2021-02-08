@@ -10,6 +10,7 @@ class Player:
     img = pygame.image.load('assets/player.png')
     rect = None
     speed = 5
+    energie = 5
 
     def load(self, x, y):
         self.img = pygame.transform.scale(self.img, (globals.OBJECT_WIDTH, globals.OBJECT_HEIGHT))
@@ -23,6 +24,11 @@ class Player:
         globals.WIN.blit(self.img, self.rect)
     
     def draw(self):
+        if self.energie <= 0:
+            self.img = pygame.image.load('assets/player_dead.png')
+            self.img = pygame.transform.scale(self.img, (globals.OBJECT_WIDTH, globals.OBJECT_HEIGHT))
+            self.img.convert()
+        
         globals.WIN.blit(self.img, self.rect)
     
     def move(self, keypressed):
@@ -30,15 +36,19 @@ class Player:
             if not isWall(self.x, self.y -1):
                 self.rect.move_ip(0, 0 - globals.OBJECT_HEIGHT)
                 self.y -= 1
+                self.energie -=1
         elif keypressed == K_s or keypressed == K_DOWN:
             if not isWall(self.x, self.y +1):
                 self.rect.move_ip(0, 0 + globals.OBJECT_HEIGHT)
                 self.y += 1
+                self.energie -=1
         elif keypressed == K_a or keypressed == K_LEFT:
             if not isWall(self.x -1, self.y):
                 self.rect.move_ip(0 - globals.OBJECT_WIDTH, 0)
                 self.x -= 1
+                self.energie -=1
         elif keypressed == K_d or keypressed == K_RIGHT:
             if not isWall(self.x + 1, self.y):
                 self.rect.move_ip(0 + globals.OBJECT_WIDTH, 0)
-                self.x += 1
+                self.x += 1     
+                self.energie -=1
