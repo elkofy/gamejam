@@ -1,0 +1,3 @@
+WIDTH = 1024
+HEIGHT = 728
+WIN = None
