@@ -16,18 +16,19 @@ player = Player()
 def main():
     run = True
     globals.WIN.fill(colors.GREY)
-    level.create(420)
+    #level.create(420)
     lvl = level.load(420)
     #level.cli(lvl)
-    level.show(lvl)
     player.load(4, 6)
     while run:
+        level.show(lvl)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
             elif event.type == KEYDOWN:
                 player.move(event.key)
-        pygame.display.update()
+        player.draw()
+        pygame.display.flip()
     pygame.quit()
 
 if __name__ == "__main__" :

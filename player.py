@@ -1,7 +1,8 @@
 import pygame
 from pygame.locals import*
+import colors
 import globals
-
+from globals import *
 
 class Player:
     x = 0 #en unité jeu
@@ -13,19 +14,27 @@ class Player:
     def load(self, x, y):
         self.img = pygame.transform.scale(self.img, (globals.OBJECT_WIDTH, globals.OBJECT_HEIGHT))
         self.img.convert()
-        self.rect = pygame.Rect(globals.calcX(x), globals.calcY(y), globals.GAME_WIDTH, globals.GAME_HEIGHT)
+        self.rect = self.img.get_rect()
+        self.rect.move_ip(calcX(x), calcY(y))
 
         self.x = x
         self.y = y
 
         globals.WIN.blit(self.img, self.rect)
     
+    def draw(self):
+        globals.WIN.blit(self.img, self.rect)
+    
     def move(self, keypressed):
         if keypressed == K_w or keypressed == K_UP:
-            self.rect.move(self.x, self.y + globals.OBJECT_HEIGHT)
+            self.rect.move_ip(0, 0 - globals.OBJECT_HEIGHT)
+            self.y -= 1
         elif keypressed == K_s or keypressed == K_DOWN:
-            print("move down")
+            self.rect.move_ip(0, 0 + globals.OBJECT_HEIGHT)
+            self.y += 1
         elif keypressed == K_a or keypressed == K_LEFT:
-            print("left")
+            self.rect.move_ip(0 - globals.OBJECT_WIDTH, 0)
+            self.x -= 1
         elif keypressed == K_d or keypressed == K_RIGHT:
-            print("move right")    
+            self.rect.move_ip(0 + globals.OBJECT_WIDTH, 0)
+            self.x += 1
