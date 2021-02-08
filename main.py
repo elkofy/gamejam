@@ -7,7 +7,9 @@ import player
 from player import *
 import level
 import energy_bar
+import objects
 globals.WIN = pygame.display.set_mode((globals.WIDTH, globals.HEIGHT));
+objects.loadSprites()
 pygame.display.set_caption("Game Jam 2021");
 
 player = Player()
@@ -15,10 +17,10 @@ player = Player()
 pygame.font.init()
 def main():
     run = True
-    globals.changeView(4, 6)
+    globals.changeView(16, 18)
     globals.LVL = level.load(2)
     # level.cli(globals.lvl)
-    player.load(4, 6)
+    player.load(16, 18)
     while run:
         globals.WIN.fill(colors.GREY)
         level.show(globals.LVL)
