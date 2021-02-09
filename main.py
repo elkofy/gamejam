@@ -15,6 +15,8 @@ pygame.display.set_caption("Game Jam 2021");
 player = Player()
     
 pygame.font.init()
+
+
 def main():
     run = True
     globals.changeView(16, 18)
@@ -22,7 +24,7 @@ def main():
     # level.cli(globals.lvl)
     player.load(16, 18)
     while run:
-        globals.WIN.fill(colors.GREY)
+        objects.drawBG()
         level.show(globals.LVL)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

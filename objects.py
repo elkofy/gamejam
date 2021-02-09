@@ -6,6 +6,8 @@ class object:
     def __init__(self, color):
         self.color = color
 
+bg_tile = pygame.transform.scale(pygame.image.load('assets/decors/sol.png'), (globals.OBJECT_WIDTH, globals.OBJECT_HEIGHT))
+
 mur = object(colors.DARK_GREY)
 
 a = object(colors.CYAN)
@@ -118,3 +120,9 @@ def drawBorder(rect, x, y):
             globals.WIN.blit(wallSprites[16], rect)
         else:
             globals.WIN.blit(wallSprites[28], rect)
+
+def drawBG():
+    bg_tile.convert()
+    for x in range(0,globals.GAME_WIDTH):
+        for y in range(0,globals.GAME_HEIGHT):
+            globals.WIN.blit(bg_tile, (globals.calcX(x), globals.calcY(y)))
