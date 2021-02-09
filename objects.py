@@ -27,6 +27,18 @@ def loadWallSprites():
 
 sprites = {}
 
+def loadPlayerSprites():
+    loadSprite("pl_u", "player/up/static.png", globals.PLAYER_WIDTH, globals.PLAYER_HEIGHT)
+    loadSprite("pl_l", "player/left/static.png", globals.PLAYER_WIDTH, globals.PLAYER_HEIGHT)
+    loadSprite("pl_r", "player/right/static.png", globals.PLAYER_WIDTH, globals.PLAYER_HEIGHT)
+    loadSprite("pl_d", "player/down/static.png", globals.PLAYER_WIDTH, globals.PLAYER_HEIGHT)
+
+    for i in range(16):
+        loadSprite("pl_u_m_" + str(i), "player/up/move_" + str(i+1) + ".png", globals.PLAYER_WIDTH, globals.PLAYER_HEIGHT)
+        loadSprite("pl_l_m_" + str(i), "player/left/move_" + str(i+1) + ".png", globals.PLAYER_WIDTH, globals.PLAYER_HEIGHT)
+        loadSprite("pl_r_m_" + str(i), "player/right/move_" + str(i+1) + ".png", globals.PLAYER_WIDTH, globals.PLAYER_HEIGHT)
+        loadSprite("pl_d_m_" + str(i), "player/down/move_" + str(i+1) + ".png", globals.PLAYER_WIDTH, globals.PLAYER_HEIGHT)
+
 def loadSprite(name, f, w = globals.OBJECT_WIDTH, h = globals.OBJECT_HEIGHT):
     global sprites
     img = pygame.image.load("assets/" + f)
@@ -36,6 +48,7 @@ def loadSprite(name, f, w = globals.OBJECT_WIDTH, h = globals.OBJECT_HEIGHT):
 
 def loadSprites():
     loadWallSprites()
+    loadPlayerSprites()
     loadSprite("blind", "blind.png", globals.WIDTH, globals.HEIGHT)
     loadSprite("pl_u", "player/up.png", globals.PLAYER_WIDTH, globals.PLAYER_HEIGHT)
     loadSprite("pl_l", "player/left.png", globals.PLAYER_WIDTH, globals.PLAYER_HEIGHT)
