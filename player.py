@@ -11,12 +11,11 @@ class Player:
     rect = None
     speed = 5
     energie = MAX_ENERGY
-
     def load(self, x, y):
-        self.img = pygame.transform.scale(self.img, (globals.OBJECT_WIDTH, globals.OBJECT_HEIGHT))
+        self.img = pygame.transform.scale(self.img, (globals.OBJECT_WIDTH - 2 * int((1 - globals.PLAYER_SCALE)/2 * OBJECT_WIDTH), globals.OBJECT_WIDTH - 2 * int((1 - globals.PLAYER_SCALE)/2 * OBJECT_WIDTH)))
         self.img.convert()
         self.rect = self.img.get_rect()
-        self.rect.move_ip(calcX(x) - globals.marginLeft, calcY(y) - globals.marginTop)
+        self.rect.move_ip(calcX(x) - globals.marginLeft + ((1 - globals.PLAYER_SCALE)/2 * globals.OBJECT_WIDTH), calcY(y) - globals.marginTop + ((1 - globals.PLAYER_SCALE)/2 * globals.OBJECT_HEIGHT))
 
         self.x = x
         self.y = y
@@ -26,7 +25,7 @@ class Player:
     def draw(self):
         if self.energie <= 0:
             self.img = pygame.image.load('assets/player_dead.png')
-            self.img = pygame.transform.scale(self.img, (globals.OBJECT_WIDTH, globals.OBJECT_HEIGHT))
+            self.img = pygame.transform.scale(self.img, (globals.OBJECT_WIDTH - 2 * int((1 - globals.PLAYER_SCALE)/2 * OBJECT_WIDTH), globals.OBJECT_WIDTH - 2 * int((1 - globals.PLAYER_SCALE)/2 * OBJECT_WIDTH)))
             self.img.convert()
         
         globals.WIN.blit(self.img, self.rect)
