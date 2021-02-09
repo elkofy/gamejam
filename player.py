@@ -21,7 +21,7 @@ player_right = pygame.transform.scale(pygame.image.load('assets/player_right.png
 class Player:
     x = 0 #en unité jeu
     y = 0
-    img = player_up
+    img = objects.sprites["pl_u"]
     rect = None
     speed = 5
     energie = MAX_ENERGY
@@ -41,7 +41,7 @@ class Player:
             self.walking_Cpt -= 1
         if self.energie <= 0:
             #self.img = pygame.image.load('assets/player_dead.png')
-            self.img = pygame.transform.scale(self.img, SCALE)
+            self.img = pygame.transform.scale(self.img, (globals.PLAYER_WIDTH, globals.PLAYER_HEIGHT))
             self.img.convert()
         
         globals.WIN.blit(self.img, self.rect)
@@ -52,23 +52,23 @@ class Player:
             if not isWall(self.x, self.y -1):
                 self.y -= 1
                 self.energie -=1
-                self.img = player_up
+                self.img = objects.sprites["pl_u"]
                 globals.changeView(self.x, self.y)
         if keys[K_s] or keys[K_DOWN]:
             if not isWall(self.x, self.y +1):
                 self.y += 1
                 self.energie -=1
-                self.img = player_down
+                self.img = objects.sprites["pl_d"]
                 globals.changeView(self.x, self.y)
         if keys[K_a] or keys[K_LEFT]:
             if not isWall(self.x -1, self.y):
                 self.x -= 1
                 self.energie -=1
-                self.img = player_left
+                self.img = objects.sprites["pl_l"]
                 globals.changeView(self.x, self.y)
         if keys[K_d] or keys[K_RIGHT]:
             if not isWall(self.x + 1, self.y):
                 self.x += 1     
                 self.energie -=1
-                self.img = player_right
+                self.img = objects.sprites["pl_r"]
                 globals.changeView(self.x, self.y)

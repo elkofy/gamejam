@@ -1,19 +1,18 @@
 import pygame
-import colors
 import globals
+globals.WIN = pygame.display.set_mode((globals.WIDTH, globals.HEIGHT));
+import colors
 from pygame.locals import*
 from globals import *
+import objects
+objects.loadSprites()
 import player
 from player import *
 import level
 import energy_bar
-import objects
-globals.WIN = pygame.display.set_mode((globals.WIDTH, globals.HEIGHT));
-objects.loadSprites()
 pygame.display.set_caption("Game Jam 2021");
 clock = pygame.time.Clock()
 player = Player()
-    
 pygame.font.init()
 
 
@@ -32,11 +31,11 @@ def main():
                 run = False
         player.move()
         player.draw()
-        if blind:
-            rect = pygame.Rect(0, 0, globals.WIDTH, globals.HEIGHT)
-            globals.WIN.blit(objects.sprites["blind"], rect)
         energy_bar.draw_bar(player.energie)
         pygame.display.flip()
+        if not player.energie >= 0:
+            pass
+            #todo Home Screen / Level Screen / Game Over Screen
     pygame.quit()
 
 
