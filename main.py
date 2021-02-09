@@ -33,6 +33,9 @@ def main():
                 player.move(event.key)
                 globals.changeView(player.x, player.y)
         player.draw()
+        if blind:
+            rect = pygame.Rect(0, 0, globals.WIDTH, globals.HEIGHT)
+            globals.WIN.blit(objects.sprites["blind"], rect)
         energy_bar.draw_bar(player.energie)
         pygame.display.flip()
     pygame.quit()

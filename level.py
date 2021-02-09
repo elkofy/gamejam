@@ -31,8 +31,8 @@ def randomlvl():
 def show(lvl):
     for y in range(len(lvl)):
         for x in range(len(lvl[y])):
-            if (lvl[y][x]):
-                objects.draw(lvl[y][x] - 1, x, y)
+            if (lvl[y][x] != 0):
+                objects.draw(lvl[y][x], x, y)
 
 def cli(lvl):
     for line in lvl:

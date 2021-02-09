@@ -1,14 +1,16 @@
 WIDTH = 1024
-HEIGHT = 728
+HEIGHT = 768
 GAME_WIDTH = 30
 GAME_HEIGHT = GAME_WIDTH
 OBJECT_WIDTH = 64
 OBJECT_HEIGHT = OBJECT_WIDTH
+PLAYER_SCALE = 0.85
 marginTop = None
 marginLeft = None
 WIN = None
 LVL = None
 MAX_ENERGY = 10
+blind = False
 #pixel_font = pygame.font.Font("assets/pixel_font.ttf", 26)
 
 def calcX(x):
@@ -18,7 +20,7 @@ def calcY(y):
     return OBJECT_HEIGHT * y
 
 def isWall(x, y):
-    if x < 0 or x > GAME_WIDTH - 1 or y < 0 or y > GAME_HEIGHT - 1 or LVL[y][x] == 1:
+    if x < 0 or x > GAME_WIDTH - 1 or y < 0 or y > GAME_HEIGHT - 1 or LVL[y][x] == "@":
         return True
     else:
         return False

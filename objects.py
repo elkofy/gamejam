@@ -3,24 +3,21 @@ import pygame
 import globals
 
 class object:
-    def __init__(self, color):
-        self.color = color
+    def __init__(self, name, sprite):
+        self.name = name
+        self.sprite = sprite
 
 bg_tile = pygame.transform.scale(pygame.image.load('assets/decors/sol.png'), (globals.OBJECT_WIDTH, globals.OBJECT_HEIGHT))
 
-mur = object(colors.DARK_GREY)
-
-a = object(colors.CYAN)
-b = object(colors.RED)
-c = object(colors.GREEN)
-d = object(colors.YELLOW)
-e = object(colors.BLUE)
-
-objArr = [mur, a, b, c, d, e]
+objList = {
+    " " : "empty",
+    "@" : "wall",
+    "t" : object("tomato", "fruits/tomato.gif"),
+    "k" : object("kiwi", "fruits/kiwi.gif")
+}
 
 wallSprites = []
-
-def loadSprites():
+def loadWallSprites():
     global wallSprites
     for i in range(29):
         img = pygame.image.load("assets/wall/" + str(i) + ".png")
@@ -28,23 +25,40 @@ def loadSprites():
         img.convert()
         wallSprites.append(img)
 
+sprites = {}
 
-def draw(num, x, y):
+def loadSprite(name, f, w = globals.OBJECT_WIDTH, h = globals.OBJECT_HEIGHT):
+    global sprites
+    img = pygame.image.load("assets/" + f)
+    img = pygame.transform.scale(img, (w, h))
+    img.convert()
+    sprites[name] = img
+
+def loadSprites():
+    loadWallSprites()
+    loadSprite("blind", "blind.png", globals.WIDTH, globals.HEIGHT)
+    for key in objList:
+        if type(objList[key]) is object:
+            loadSprite(objList[key].name, objList[key].sprite)
+
+def draw(c, x, y):
     rect = pygame.Rect(globals.calcX(x) - globals.marginLeft, globals.calcY(y) - globals.marginTop, globals.OBJECT_WIDTH, globals.OBJECT_HEIGHT)
-    if (num == 0):
+    if (objList[c] == "wall"):
         globals.WIN.blit(wallSprites[0], rect)
         drawBorder(rect, x, y)
-    else :
-        pygame.draw.rect(globals.WIN, objArr[num].color, rect)
+    else:
+        globals.WIN.blit(bg_tile, rect)
+        if type(objList[c]) is object:
+            globals.WIN.blit(sprites[objList[c].name], rect)
 
 def drawBorder(rect, x, y):
     BD_WIDTH = int(globals.OBJECT_WIDTH/4)
     BD_COLOR = colors.GREEN
     
-    top = y == 0 or not globals.LVL[y-1][x]
-    left = x == 0 or not globals.LVL[y][x-1]
-    right = x == len(globals.LVL[y])-1 or not globals.LVL[y][x+1]
-    bottom = y == len(globals.LVL)-1 or not globals.LVL[y+1][x]
+    top = y == 0 or objList[globals.LVL[y-1][x]] != "wall"
+    left = x == 0 or objList[globals.LVL[y][x-1]] != "wall"
+    right = x == len(globals.LVL[y])-1 or objList[globals.LVL[y][x+1]] != "wall"
+    bottom = y == len(globals.LVL)-1 or objList[globals.LVL[y+1][x]] != "wall"
 
     #BORDERS
     #top
@@ -77,7 +91,7 @@ def drawBorder(rect, x, y):
     elif (not top and left):
         globals.WIN.blit(wallSprites[18], rect)
     else:
-        if (globals.LVL[y-1][x-1]):
+        if (objList[globals.LVL[y-1][x-1]] == "wall"):
             globals.WIN.blit(wallSprites[10], rect)
         else :
             globals.WIN.blit(wallSprites[25], rect)
@@ -90,7 +104,7 @@ def drawBorder(rect, x, y):
     elif (not top and right):
         globals.WIN.blit(wallSprites[20], rect)
     else:
-        if (globals.LVL[y-1][x+1]):
+        if (objList[globals.LVL[y-1][x+1]] == "wall"):
             globals.WIN.blit(wallSprites[12], rect)
         else:
             globals.WIN.blit(wallSprites[26], rect)
@@ -103,7 +117,7 @@ def drawBorder(rect, x, y):
     elif (not bottom and left):
         globals.WIN.blit(wallSprites[22], rect)
     else:
-        if (globals.LVL[y+1][x-1]):
+        if (objList[globals.LVL[y+1][x-1]] == "wall"):
             globals.WIN.blit(wallSprites[14], rect)
         else:
             globals.WIN.blit(wallSprites[27], rect)
@@ -116,7 +130,7 @@ def drawBorder(rect, x, y):
     elif (not bottom and right):
         globals.WIN.blit(wallSprites[24], rect)
     else:
-        if (globals.LVL[y+1][x+1]):
+        if (objList[globals.LVL[y+1][x+1]] == "wall"):
             globals.WIN.blit(wallSprites[16], rect)
         else:
             globals.WIN.blit(wallSprites[28], rect)
