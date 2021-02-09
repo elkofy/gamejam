@@ -13,7 +13,6 @@ import energy_bar
 pygame.display.set_caption("Game Jam 2021");
 clock = pygame.time.Clock()
 player = Player()
-    
 pygame.font.init()
 
 
@@ -32,11 +31,11 @@ def main():
                 run = False
         player.move()
         player.draw()
-        if blind:
-            rect = pygame.Rect(0, 0, globals.WIDTH, globals.HEIGHT)
-            globals.WIN.blit(objects.sprites["blind"], rect)
         energy_bar.draw_bar(player.energie)
         pygame.display.flip()
+        if not player.energie >= 0:
+            pass
+            #todo Home Screen / Level Screen / Game Over Screen
     pygame.quit()
 
 
