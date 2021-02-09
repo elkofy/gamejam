@@ -11,7 +11,7 @@ import objects
 globals.WIN = pygame.display.set_mode((globals.WIDTH, globals.HEIGHT));
 objects.loadSprites()
 pygame.display.set_caption("Game Jam 2021");
-
+clock = pygame.time.Clock()
 player = Player()
     
 pygame.font.init()
@@ -24,14 +24,13 @@ def main():
     # level.cli(globals.lvl)
     player.load(16, 18)
     while run:
+        #clock.tick(60)
         objects.drawBG()
         level.show(globals.LVL)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
-            elif event.type == KEYDOWN:
-                player.move(event.key)
-                globals.changeView(player.x, player.y)
+        player.move()
         player.draw()
         energy_bar.draw_bar(player.energie)
         pygame.display.flip()
