@@ -3,6 +3,13 @@ from pygame.locals import*
 import colors
 import globals
 from globals import *
+from enum import Enum
+
+class Directions(Enum):
+    Up = 0
+    Down = 1
+    Left = 2
+    Right = 3
 
 SCALE = (globals.OBJECT_WIDTH - 2 * int((1 - globals.PLAYER_SCALE)/2 * OBJECT_WIDTH), globals.OBJECT_WIDTH - 2 * int((1 - globals.PLAYER_SCALE)/2 * OBJECT_WIDTH))
 
@@ -18,6 +25,7 @@ class Player:
     rect = None
     speed = 5
     energie = MAX_ENERGY
+    walking_Cpt = 0
     def load(self, x, y):
         self.img.convert()
         self.rect = self.img.get_rect()
@@ -29,6 +37,8 @@ class Player:
         globals.WIN.blit(self.img, self.rect)
     
     def draw(self):
+        if self.walking_Cpt >= 0:
+            self.walking_Cpt -= 1
         if self.energie <= 0:
             #self.img = pygame.image.load('assets/player_dead.png')
             self.img = pygame.transform.scale(self.img, SCALE)
