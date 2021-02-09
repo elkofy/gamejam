@@ -13,6 +13,7 @@ WIN = None
 LVL = None
 MAX_ENERGY = 10
 blind = False
+Jour = True
 #pixel_font = pygame.font.Font("assets/pixel_font.ttf", 26)
 
 def calcX(x):
@@ -20,6 +21,12 @@ def calcX(x):
 
 def calcY(y):
     return OBJECT_HEIGHT * y
+
+def calcPxX(x):
+    return round(x / OBJECT_WIDTH)
+
+def calcPxY(y):
+    return round(y / OBJECT_HEIGHT)
 
 def isWall(x, y):
     if x < 0 or x > GAME_WIDTH - 1 or y < 0 or y > GAME_HEIGHT - 1 or LVL[y][x] == "@":
