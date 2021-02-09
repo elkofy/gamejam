@@ -3,18 +3,12 @@ from pygame.locals import*
 import colors
 import globals
 from globals import *
-
-SCALE = (globals.OBJECT_WIDTH - 2 * int((1 - globals.PLAYER_SCALE)/2 * OBJECT_WIDTH), globals.OBJECT_WIDTH - 2 * int((1 - globals.PLAYER_SCALE)/2 * OBJECT_WIDTH))
-
-player_down = pygame.transform.scale(pygame.image.load('assets/player_down.png'), SCALE)
-player_up = pygame.transform.scale(pygame.image.load('assets/player_up.png'), SCALE)
-player_left = pygame.transform.scale(pygame.image.load('assets/player_left.png'), SCALE)
-player_right = pygame.transform.scale(pygame.image.load('assets/player_right.png'), SCALE)
+import objects
 
 class Player:
     x = 0 #en unité jeu
     y = 0
-    img = player_up
+    img = objects.sprites["pl_u"]
     rect = None
     speed = 5
     energie = MAX_ENERGY
@@ -31,7 +25,7 @@ class Player:
     def draw(self):
         if self.energie <= 0:
             #self.img = pygame.image.load('assets/player_dead.png')
-            self.img = pygame.transform.scale(self.img, SCALE)
+            self.img = pygame.transform.scale(self.img, (globals.PLAYER_WIDTH, globals.PLAYER_HEIGHT))
             self.img.convert()
         
         globals.WIN.blit(self.img, self.rect)
@@ -42,23 +36,23 @@ class Player:
             if not isWall(self.x, self.y -1):
                 self.y -= 1
                 self.energie -=1
-                self.img = player_up
+                self.img = objects.sprites["pl_u"]
                 globals.changeView(self.x, self.y)
         if keys[K_s] or keys[K_DOWN]:
             if not isWall(self.x, self.y +1):
                 self.y += 1
                 self.energie -=1
-                self.img = player_down
+                self.img = objects.sprites["pl_d"]
                 globals.changeView(self.x, self.y)
         if keys[K_a] or keys[K_LEFT]:
             if not isWall(self.x -1, self.y):
                 self.x -= 1
                 self.energie -=1
-                self.img = player_left
+                self.img = objects.sprites["pl_l"]
                 globals.changeView(self.x, self.y)
         if keys[K_d] or keys[K_RIGHT]:
             if not isWall(self.x + 1, self.y):
                 self.x += 1     
                 self.energie -=1
-                self.img = player_right
+                self.img = objects.sprites["pl_r"]
                 globals.changeView(self.x, self.y)

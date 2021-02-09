@@ -1,15 +1,15 @@
 import pygame
-import colors
 import globals
+globals.WIN = pygame.display.set_mode((globals.WIDTH, globals.HEIGHT));
+import colors
 from pygame.locals import*
 from globals import *
+import objects
+objects.loadSprites()
 import player
 from player import *
 import level
 import energy_bar
-import objects
-globals.WIN = pygame.display.set_mode((globals.WIDTH, globals.HEIGHT));
-objects.loadSprites()
 pygame.display.set_caption("Game Jam 2021");
 clock = pygame.time.Clock()
 player = Player()

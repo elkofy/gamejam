@@ -37,6 +37,10 @@ def loadSprite(name, f, w = globals.OBJECT_WIDTH, h = globals.OBJECT_HEIGHT):
 def loadSprites():
     loadWallSprites()
     loadSprite("blind", "blind.png", globals.WIDTH, globals.HEIGHT)
+    loadSprite("pl_u", "player/up.png", globals.PLAYER_WIDTH, globals.PLAYER_HEIGHT)
+    loadSprite("pl_l", "player/left.png", globals.PLAYER_WIDTH, globals.PLAYER_HEIGHT)
+    loadSprite("pl_r", "player/right.png", globals.PLAYER_WIDTH, globals.PLAYER_HEIGHT)
+    loadSprite("pl_d", "player/down.png", globals.PLAYER_WIDTH, globals.PLAYER_HEIGHT)
     for key in objList:
         if type(objList[key]) is object:
             loadSprite(objList[key].name, objList[key].sprite)
