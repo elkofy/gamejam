@@ -4,7 +4,9 @@ import colors
 import globals
 from globals import *
 from enum import Enum
-import objects
+import sprites
+import time
+import draw
 
 class Directions(Enum):
     Up = 0
@@ -17,7 +19,7 @@ SCALE = (globals.OBJECT_WIDTH - 2 * int((1 - globals.PLAYER_SCALE)/2 * OBJECT_WI
 class Player:
     x = 0 #en unité jeu
     y = 0
-    img = objects.sprites["pl_u"]
+    img = sprites.sl["pl_u_s"]
     rect = None
     speed = 5
     energie = MAX_ENERGY
@@ -46,25 +48,41 @@ class Player:
         keys=pygame.key.get_pressed()
         if keys[K_z] or keys[K_UP]:
             if not isWall(self.x, self.y -1):
+                for i in range(16):
+                    self.img = sprites.sl["pl_u_m_" + str(i)]
+                    globals.changeViewRel(0, - (OBJECT_HEIGHT / 16))
+                    draw.drawAll()
                 self.y -= 1
                 self.energie -=1
-                self.img = objects.sprites["pl_u"]
                 globals.changeView(self.x, self.y)
+            self.img = sprites.sl["pl_u_s"]
         if keys[K_s] or keys[K_DOWN]:
             if not isWall(self.x, self.y +1):
+                for i in range(16):
+                    self.img = sprites.sl["pl_d_m_" + str(i)]
+                    globals.changeViewRel(0, OBJECT_HEIGHT / 16)
+                    draw.drawAll()
                 self.y += 1
                 self.energie -=1
-                self.img = objects.sprites["pl_d"]
                 globals.changeView(self.x, self.y)
+            self.img = sprites.sl["pl_d_s"]
         if keys[K_q] or keys[K_LEFT]:
             if not isWall(self.x -1, self.y):
+                for i in range(16):
+                    self.img = sprites.sl["pl_l_m_" + str(i)]
+                    globals.changeViewRel(- (OBJECT_WIDTH / 16), 0)
+                    draw.drawAll()
                 self.x -= 1
                 self.energie -=1
-                self.img = objects.sprites["pl_l"]
                 globals.changeView(self.x, self.y)
+            self.img = sprites.sl["pl_l_s"]
         if keys[K_d] or keys[K_RIGHT]:
             if not isWall(self.x + 1, self.y):
+                for i in range(16):
+                    self.img = sprites.sl["pl_r_m_" + str(i)]
+                    globals.changeViewRel(OBJECT_WIDTH / 16, 0)
+                    draw.drawAll()
                 self.x += 1     
                 self.energie -=1
-                self.img = objects.sprites["pl_r"]
                 globals.changeView(self.x, self.y)
+            self.img = sprites.sl["pl_r_s"]

@@ -11,8 +11,9 @@ marginTop = None
 marginLeft = None
 WIN = None
 LVL = None
+MAP = None
+PLAYER = None
 MAX_ENERGY = 10
-blind = False
 Jour = True
 #pixel_font = pygame.font.Font("assets/pixel_font.ttf", 26)
 
@@ -39,3 +40,9 @@ def changeView(x, y):
     global marginTop
     marginLeft = calcX(x) - (WIDTH / 2) + OBJECT_WIDTH / 2
     marginTop = calcY(y) - (HEIGHT / 2) + OBJECT_HEIGHT / 2
+
+def changeViewRel(x, y):
+    global marginLeft
+    global marginTop
+    marginLeft += x
+    marginTop += y
