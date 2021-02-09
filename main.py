@@ -9,6 +9,7 @@ objects.loadSprites()
 import player
 from player import *
 import level
+
 import energy_bar
 pygame.display.set_caption("Game Jam 2021");
 clock = pygame.time.Clock()
@@ -16,8 +17,10 @@ player = Player()
 pygame.font.init()
 
 
+
 def main():
     run = True
+    
     globals.changeView(16, 18)
     globals.LVL = level.load(2)
     # level.cli(globals.lvl)
@@ -39,5 +42,4 @@ def main():
     pygame.quit()
 
 
-if __name__ == "__main__":
-    main()
+
