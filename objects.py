@@ -41,6 +41,7 @@ def loadPlayerSprites():
 
 def loadSprite(name, f, w = globals.OBJECT_WIDTH, h = globals.OBJECT_HEIGHT):
     global sprites
+    print(f)
     img = pygame.image.load("assets/" + f)
     img = pygame.transform.scale(img, (w, h))
     img.convert()
@@ -50,10 +51,6 @@ def loadSprites():
     loadWallSprites()
     loadPlayerSprites()
     loadSprite("blind", "blind.png", globals.WIDTH, globals.HEIGHT)
-    loadSprite("pl_u", "player/up.png", globals.PLAYER_WIDTH, globals.PLAYER_HEIGHT)
-    loadSprite("pl_l", "player/left.png", globals.PLAYER_WIDTH, globals.PLAYER_HEIGHT)
-    loadSprite("pl_r", "player/right.png", globals.PLAYER_WIDTH, globals.PLAYER_HEIGHT)
-    loadSprite("pl_d", "player/down.png", globals.PLAYER_WIDTH, globals.PLAYER_HEIGHT)
     loadSprite("m_tomato", "mobs/monstertomato.gif", globals.PLAYER_WIDTH, globals.PLAYER_HEIGHT)
     for key in objList:
         if type(objList[key]) is object:

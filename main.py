@@ -12,7 +12,7 @@ import level
 import energy_bar
 import mobs
 
-pygame.display.set_caption("Game Jam 2021");
+pygame.display.set_caption("Organic future");
 clock = pygame.time.Clock()
 player = Player()
 pygame.font.init()
