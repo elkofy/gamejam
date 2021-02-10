@@ -5,7 +5,7 @@ import colors
 from pygame.locals import*
 from globals import *
 import level
-
+import mobs
 import energy_bar
 import sprites
 sprites.load()
@@ -19,16 +19,13 @@ player = Player()
 globals.PLAYER = player
 
 def main():
+    lvl = globals.NUM_LVL
     run = True
-    globals.LVL = level.load(2)
-    globals.MAP = level.toTileMap(globals.LVL)
-    level.cli(globals.LVL)
-    spawnTile = level.getSpawn(globals.MAP)
-    spawnX = spawnTile.x
-    spawnY = spawnTile.y
-    globals.changeView(spawnX, spawnY)
-    player.load(spawnX, spawnY)
+    
+    load_lvl(2)
     while run:
+        if globals.LVL_CHANGED:
+            load_lvl(globals.NUM_LVL)
         clock.tick(30)
         globals.WIN.fill(colors.GREY) # background
         level.show(globals.MAP) # tiles
@@ -45,7 +42,10 @@ def main():
                 run = False
         
         player.move()
-        
+        for i in mobs.mobs:
+            i.move()
+        #m_tomato.move()
+        #m_tomato.draw()
         if not player.energie >= 0:
             pass
 
@@ -54,4 +54,12 @@ def main():
     pygame.quit()
 
 
-
+def load_lvl(num_lvl):
+    globals.LVL = level.load(num_lvl)
+    globals.MAP = level.toTileMap(globals.LVL)
+    level.cli(globals.LVL)
+    spawnTile = level.getSpawn(globals.MAP)
+    spawnX = spawnTile.x
+    spawnY = spawnTile.y
+    globals.changeView(spawnX, spawnY)
+    player.load(spawnX, spawnY)

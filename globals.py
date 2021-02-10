@@ -14,8 +14,10 @@ LVL = None
 MAP = None
 PLAYER = None
 MAX_ENERGY = 10
-Jour = True
+Jour = False
 NOCLIP = False
+NUM_LVL = 2
+LVL_CHANGED = False
 #pixel_font = pygame.font.Font("assets/pixel_font.ttf", 26)
 
 def calcX(x):
