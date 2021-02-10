@@ -6,7 +6,7 @@ sl = {}
 toLoad = {
     "spawn" : "start.png",
     "bg_tile" : "decors/sol.png",
-    "bed" : "bed_temp.png",
+    "bed" : "bed.png",
     "f_tomato" : "fruits/tomato.gif",
     "m_tomato" : "mobs/tomato.gif",
     "f_kiwi" : "fruits/kiwi.gif",
