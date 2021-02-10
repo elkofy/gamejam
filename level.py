@@ -59,8 +59,5 @@ def show(map = globals.MAP):
 def cli(lvl = globals.LVL):
     for line in lvl:
         for case in line:
-            if (case):
-                print(case, end="")
-            else:
-                print(" ", end="")
+            print(case + " ", end="")
         print("\n", end="")
