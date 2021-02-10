@@ -7,6 +7,7 @@ from enum import Enum
 import sprites
 import time
 import draw
+import tile
 
 class Directions(Enum):
     Up = 0
@@ -46,8 +47,12 @@ class Player:
     
     def move(self):
         keys=pygame.key.get_pressed()
+
+        oldX = self.x
+        oldY = self.y
+
         if keys[K_z] or keys[K_UP]:
-            if not isWall(self.x, self.y -1):
+            if globals.NOCLIP or not isWall(self.x, self.y -1):
                 for i in range(16):
                     self.img = sprites.sl["pl_u_m_" + str(i)]
                     globals.changeViewRel(0, - (OBJECT_HEIGHT / 16))
@@ -57,7 +62,7 @@ class Player:
                 globals.changeView(self.x, self.y)
             self.img = sprites.sl["pl_u_s"]
         if keys[K_s] or keys[K_DOWN]:
-            if not isWall(self.x, self.y +1):
+            if globals.NOCLIP or not isWall(self.x, self.y +1):
                 for i in range(16):
                     self.img = sprites.sl["pl_d_m_" + str(i)]
                     globals.changeViewRel(0, OBJECT_HEIGHT / 16)
@@ -67,7 +72,7 @@ class Player:
                 globals.changeView(self.x, self.y)
             self.img = sprites.sl["pl_d_s"]
         if keys[K_q] or keys[K_LEFT]:
-            if not isWall(self.x -1, self.y):
+            if globals.NOCLIP or not isWall(self.x -1, self.y):
                 for i in range(16):
                     self.img = sprites.sl["pl_l_m_" + str(i)]
                     globals.changeViewRel(- (OBJECT_WIDTH / 16), 0)
@@ -77,7 +82,7 @@ class Player:
                 globals.changeView(self.x, self.y)
             self.img = sprites.sl["pl_l_s"]
         if keys[K_d] or keys[K_RIGHT]:
-            if not isWall(self.x + 1, self.y):
+            if globals.NOCLIP or not isWall(self.x + 1, self.y):
                 for i in range(16):
                     self.img = sprites.sl["pl_r_m_" + str(i)]
                     globals.changeViewRel(OBJECT_WIDTH / 16, 0)
@@ -86,3 +91,12 @@ class Player:
                 self.energie -=1
                 globals.changeView(self.x, self.y)
             self.img = sprites.sl["pl_r_s"]
+        
+        if self.x != oldX or self.y != oldY:
+            if type(globals.MAP[self.y][self.x]) is tile.Bed:
+                if globals.Jour :
+                    globals.Jour = False
+                    print("day end")
+                else :
+                    globals.Jour = True
+                    print("night end")

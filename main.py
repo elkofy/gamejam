@@ -5,6 +5,7 @@ import colors
 from pygame.locals import*
 from globals import *
 import level
+
 import energy_bar
 import sprites
 sprites.load()
@@ -14,11 +15,11 @@ import draw
 
 pygame.display.set_caption("Organic Future");
 clock = pygame.time.Clock()
+pygame.font.init()
 player = Player()
 globals.PLAYER = player
-pygame.font.init()
-
 #m_tomato = mobs.Mob();
+
 
 def main():
     run = True
@@ -46,5 +47,4 @@ def main():
     pygame.quit()
 
 
-if __name__ == "__main__":
-    main()
+

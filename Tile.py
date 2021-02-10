@@ -114,7 +114,8 @@ class Bed(Tile):
         Tile.__init__(self, x, y)
 
     def draw(self):
-        globals.WIN.blit(sl["spawn"], self.rect)
+        Tile.draw(self)
+        globals.WIN.blit(sl["bed"], self.rect)
 
 
 class Trap(Tile):
@@ -126,7 +127,7 @@ def getTile(c, x, y):
     elif (chars[c] == "spawn"):
         return Spawn(x, y)
     elif (chars[c] == "bed"):
-        return Spawn(x, y)
+        return Bed(x, y)
     elif (chars[c] == "wall"):
         return Wall(x, y)
     elif (chars[c] == "tomato"):

@@ -15,6 +15,7 @@ MAP = None
 PLAYER = None
 MAX_ENERGY = 10
 Jour = True
+NOCLIP = False
 #pixel_font = pygame.font.Font("assets/pixel_font.ttf", 26)
 
 def calcX(x):
