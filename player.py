@@ -6,7 +6,6 @@ from globals import *
 from enum import Enum
 import sprites
 import time
-import draw
 import tile
 
 class Directions(Enum):
@@ -31,6 +30,8 @@ class Player:
         self.rect.y = calcY(self.y) - globals.marginTop + ((1 - globals.PLAYER_SCALE)/2 * globals.OBJECT_HEIGHT)
 
     def load(self, x, y):
+        self.moving = False
+        self.dirr = None
         self.iSprite = 0
         self.img.convert()
         self.rect = self.img.get_rect()
@@ -67,17 +68,21 @@ class Player:
         globals.WIN.blit(self.img, self.rect)
     
     def moveAnim(self, dirr):
+        
         if dirr == "u":
-            self.rect.move_ip(0, - OBJECT_HEIGHT / 16)
+            globals.changeViewY(- OBJECT_HEIGHT / 16)
         elif dirr == "l":
-            self.rect.move_ip(- OBJECT_WIDTH / 16, 0)
+            globals.changeViewX(- OBJECT_HEIGHT / 16)
         elif dirr == "r":
-            self.rect.move_ip(OBJECT_WIDTH / 16, 0)
+            globals.changeViewX(OBJECT_HEIGHT / 16)
         elif dirr == "d":
-            self.rect.move_ip(0, OBJECT_HEIGHT / 16)
+            globals.changeViewY(OBJECT_HEIGHT / 16)
+        print(self.iSprite, self.x, self.y, self.rect.x, self.rect.y)
 
         self.img = sprites.sl["pl_" + dirr + "_m_" + str(self.iSprite)]
         self.iSprite = (self.iSprite + 1) % 16
+        if self.iSprite == 0:
+            self.moving = False
 
     def move(self):
         keys=pygame.key.get_pressed()
@@ -85,46 +90,44 @@ class Player:
         oldX = self.x
         oldY = self.y
 
-        if keys[K_z] or keys[K_UP]:
-            if globals.NOCLIP or not isWall(self.x, self.y -1):
-                draw.anim("u", self)
-                self.energie -= 1
-                self.y = oldY - 1
-                globals.changeView(self.x, self.y)
-            self.resetPos()
-            oldX = self.x
-            oldY = self.y
-            self.img = sprites.sl["pl_u_s"]
-        if keys[K_s] or keys[K_DOWN]:
-            if globals.NOCLIP or not isWall(self.x, self.y +1):
-                draw.anim("d", self)
-                self.energie -= 1
-                self.y = oldY + 1
-                globals.changeView(self.x, self.y)
-            self.resetPos()
-            oldX = self.x
-            oldY = self.y
-            self.img = sprites.sl["pl_d_s"]
-        if keys[K_q] or keys[K_LEFT]:
-            if globals.NOCLIP or not isWall(self.x -1, self.y):
-                draw.anim("l", self)
-                self.energie -= 1
-                self.x = oldX - 1
-                globals.changeView(self.x, self.y)
-            self.resetPos()
-            oldX = self.x
-            oldY = self.y
-            self.img = sprites.sl["pl_l_s"]
-        if keys[K_d] or keys[K_RIGHT]:
-            if globals.NOCLIP or not isWall(self.x + 1, self.y):
-                draw.anim("r", self)
-                self.energie -= 1
-                self.x = oldX + 1
-                globals.changeView(self.x, self.y)
-            self.resetPos()
-            oldX = self.x
-            oldY = self.y
-            self.img = sprites.sl["pl_r_s"]
+        if not self.moving:
+            if keys[K_z] or keys[K_UP]:
+                if globals.NOCLIP or not isWall(self.x, self.y -1):
+                    self.moving = True
+                    self.dirr = "u"
+                    self.y -= 1
+                    #self.rect.move_ip(0, OBJECT_HEIGHT)
+                    self.energie -= 1
+                self.img = sprites.sl["pl_u_s"]
+            elif keys[K_s] or keys[K_DOWN]:
+                if globals.NOCLIP or not isWall(self.x, self.y +1):
+                    self.moving = True
+                    self.dirr = "d"
+                    self.y += 1
+                    #self.rect.move_ip(0, -OBJECT_HEIGHT)
+                    self.moving = True
+                    self.energie -= 1
+                self.img = sprites.sl["pl_d_s"]
+            elif keys[K_q] or keys[K_LEFT]:
+                if globals.NOCLIP or not isWall(self.x -1, self.y):
+                    self.moving = True
+                    self.dirr = "l"
+                    self.x -= 1
+                    #self.rect.move_ip(OBJECT_WIDTH, 0)
+                    self.moving = True
+                    self.energie -= 1
+                self.img = sprites.sl["pl_l_s"]
+            elif keys[K_d] or keys[K_RIGHT]:
+                if globals.NOCLIP or not isWall(self.x + 1, self.y):
+                    self.moving = True
+                    self.dirr = "r"
+                    self.x += 1
+                    #self.rect.move_ip(-OBJECT_WIDTH, 0)
+                    self.moving = True
+                    self.energie -= 1
+                self.img = sprites.sl["pl_r_s"]
+        else:
+            self.moveAnim(self.dirr)
 
         if self.x != oldX or self.y != oldY:
             if type(self.getCurrentTile()) is tile.Bed:
