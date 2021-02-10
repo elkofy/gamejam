@@ -15,12 +15,12 @@ toLoad = {
 
 def loadSprite(name, f, w = globals.OBJECT_WIDTH, h = globals.OBJECT_HEIGHT):
     global sprites
-    print("loading " + f + " : ", end="")
+    #print("loading " + f + " : ", end="")
     img = pygame.image.load("assets/" + f)
     img = pygame.transform.scale(img, (w, h))
     img.convert()
     sl[name] = img
-    print("loaded")
+    #print("loaded")
 
 def loadWallSprites():
     global wallSprites

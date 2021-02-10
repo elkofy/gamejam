@@ -22,6 +22,7 @@ class Mob(tile.Tile):
         self.sort = sort
         self.setDir(dir)
         mobs.append(self)
+        print(sort + str(globals.Jour))
 
 
     def draw(self):

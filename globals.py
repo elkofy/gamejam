@@ -13,10 +13,10 @@ WIN = None
 LVL = None
 MAP = None
 PLAYER = None
-MAX_ENERGY = 10
-Jour = False
+MAX_ENERGY = 25
+Jour = True
 NOCLIP = False
-NUM_LVL = 2
+NUM_LVL = 1
 LVL_CHANGED = False
 #pixel_font = pygame.font.Font("assets/pixel_font.ttf", 26)
 

@@ -93,16 +93,28 @@ class Player:
             self.img = sprites.sl["pl_r_s"]
         
         if self.x != oldX or self.y != oldY:
-            if type(globals.MAP[self.y][self.x]) is tile.Bed:
-                if globals.Jour :
-                    globals.Jour = False
-                    print("day end")
-                else :
-                    globals.Jour = True
-                    print("night end")
             if type(globals.MAP[self.y][self.x]) is tile.Fruits:
                 self.energie += 10
                 globals.MAP[self.y][self.x] = tile.Tile(self.x, self.y)
+            if type(globals.MAP[self.y][self.x]) is tile.Bed:
+                print(globals.Jour)
+                if not globals.Jour:
+                        globals.Jour = True
+                        globals.LVL_CHANGED = True
+                        globals.NUM_LVL += 1
+                else:
+                    globals.Jour = False
+                    globals.LVL_CHANGED = True
 
-    def death():
-        None
+                self.energie = MAX_ENERGY
+
+        
+        if globals.Jour and self.energie <= 0:
+            self.death()
+    
+
+    def death(self):
+        if not globals.Jour:
+            globals.Jour = True
+        globals.LVL_CHANGED = True
+        self.energie = MAX_ENERGY
