@@ -77,7 +77,6 @@ class Player:
             globals.changeViewX(OBJECT_HEIGHT / 16)
         elif dirr == "d":
             globals.changeViewY(OBJECT_HEIGHT / 16)
-        print(self.iSprite, self.x, self.y, self.rect.x, self.rect.y)
 
         self.img = sprites.sl["pl_" + dirr + "_m_" + str(self.iSprite)]
         self.iSprite = (self.iSprite + 1) % 16
@@ -96,7 +95,6 @@ class Player:
                     self.moving = True
                     self.dirr = "u"
                     self.y -= 1
-                    #self.rect.move_ip(0, OBJECT_HEIGHT)
                     self.energie -= 1
                 self.img = sprites.sl["pl_u_s"]
             elif keys[K_s] or keys[K_DOWN]:
@@ -104,7 +102,6 @@ class Player:
                     self.moving = True
                     self.dirr = "d"
                     self.y += 1
-                    #self.rect.move_ip(0, -OBJECT_HEIGHT)
                     self.moving = True
                     self.energie -= 1
                 self.img = sprites.sl["pl_d_s"]
@@ -113,7 +110,6 @@ class Player:
                     self.moving = True
                     self.dirr = "l"
                     self.x -= 1
-                    #self.rect.move_ip(OBJECT_WIDTH, 0)
                     self.moving = True
                     self.energie -= 1
                 self.img = sprites.sl["pl_l_s"]
@@ -122,7 +118,6 @@ class Player:
                     self.moving = True
                     self.dirr = "r"
                     self.x += 1
-                    #self.rect.move_ip(-OBJECT_WIDTH, 0)
                     self.moving = True
                     self.energie -= 1
                 self.img = sprites.sl["pl_r_s"]
