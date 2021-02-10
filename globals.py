@@ -41,9 +41,3 @@ def changeView(x, y):
     global marginTop
     marginLeft = calcX(x) - (WIDTH / 2) + OBJECT_WIDTH / 2
     marginTop = calcY(y) - (HEIGHT / 2) + OBJECT_HEIGHT / 2
-
-def changeViewRel(x, y):
-    global marginLeft
-    global marginTop
-    marginLeft += x
-    marginTop += y

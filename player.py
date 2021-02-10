@@ -25,16 +25,37 @@ class Player:
     speed = 5
     energie = MAX_ENERGY
     walking_Cpt = 0
+
+    def resetPos(self):
+        self.rect.x = calcX(self.x) - globals.marginLeft + ((1 - globals.PLAYER_SCALE)/2 * globals.OBJECT_WIDTH)
+        self.rect.y = calcY(self.y) - globals.marginTop + ((1 - globals.PLAYER_SCALE)/2 * globals.OBJECT_HEIGHT)
+
     def load(self, x, y):
+        self.iSprite = 0
         self.img.convert()
         self.rect = self.img.get_rect()
-        self.rect.move_ip(calcX(x) - globals.marginLeft + ((1 - globals.PLAYER_SCALE)/2 * globals.OBJECT_WIDTH), calcY(y) - globals.marginTop + ((1 - globals.PLAYER_SCALE)/2 * globals.OBJECT_HEIGHT))
 
         self.x = x
         self.y = y
 
+        self.resetPos()
+
         globals.WIN.blit(self.img, self.rect)
     
+    def getCurrentTile(self):
+        return globals.MAP[self.y][self.x]
+
+    def hide(self, dirr):
+        self.getCurrentTile().draw()
+        if (dirr == "u"):
+            globals.MAP[self.y - 1][self.x].draw()
+        elif (dirr == "l"):
+            globals.MAP[self.y][self.x - 1].draw()
+        elif (dirr == "r"):
+            globals.MAP[self.y][self.x + 1].draw()
+        elif (dirr == "d"):
+            globals.MAP[self.y + 1][self.x].draw()
+
     def draw(self):
         if self.walking_Cpt >= 0:
             self.walking_Cpt -= 1
@@ -45,6 +66,19 @@ class Player:
         
         globals.WIN.blit(self.img, self.rect)
     
+    def moveAnim(self, dirr):
+        if dirr == "u":
+            self.rect.move_ip(0, - OBJECT_HEIGHT / 16)
+        elif dirr == "l":
+            self.rect.move_ip(- OBJECT_WIDTH / 16, 0)
+        elif dirr == "r":
+            self.rect.move_ip(OBJECT_WIDTH / 16, 0)
+        elif dirr == "d":
+            self.rect.move_ip(0, OBJECT_HEIGHT / 16)
+
+        self.img = sprites.sl["pl_" + dirr + "_m_" + str(self.iSprite)]
+        self.iSprite = (self.iSprite + 1) % 16
+
     def move(self):
         keys=pygame.key.get_pressed()
 
@@ -53,47 +87,47 @@ class Player:
 
         if keys[K_z] or keys[K_UP]:
             if globals.NOCLIP or not isWall(self.x, self.y -1):
-                for i in range(16):
-                    self.img = sprites.sl["pl_u_m_" + str(i)]
-                    globals.changeViewRel(0, - (OBJECT_HEIGHT / 16))
-                    draw.drawAll()
-                self.y -= 1
-                self.energie -=1
+                draw.anim("u", self)
+                self.energie -= 1
+                self.y = oldY - 1
                 globals.changeView(self.x, self.y)
+            self.resetPos()
+            oldX = self.x
+            oldY = self.y
             self.img = sprites.sl["pl_u_s"]
         if keys[K_s] or keys[K_DOWN]:
             if globals.NOCLIP or not isWall(self.x, self.y +1):
-                for i in range(16):
-                    self.img = sprites.sl["pl_d_m_" + str(i)]
-                    globals.changeViewRel(0, OBJECT_HEIGHT / 16)
-                    draw.drawAll()
-                self.y += 1
-                self.energie -=1
+                draw.anim("d", self)
+                self.energie -= 1
+                self.y = oldY + 1
                 globals.changeView(self.x, self.y)
+            self.resetPos()
+            oldX = self.x
+            oldY = self.y
             self.img = sprites.sl["pl_d_s"]
         if keys[K_q] or keys[K_LEFT]:
             if globals.NOCLIP or not isWall(self.x -1, self.y):
-                for i in range(16):
-                    self.img = sprites.sl["pl_l_m_" + str(i)]
-                    globals.changeViewRel(- (OBJECT_WIDTH / 16), 0)
-                    draw.drawAll()
-                self.x -= 1
-                self.energie -=1
+                draw.anim("l", self)
+                self.energie -= 1
+                self.x = oldX - 1
                 globals.changeView(self.x, self.y)
+            self.resetPos()
+            oldX = self.x
+            oldY = self.y
             self.img = sprites.sl["pl_l_s"]
         if keys[K_d] or keys[K_RIGHT]:
             if globals.NOCLIP or not isWall(self.x + 1, self.y):
-                for i in range(16):
-                    self.img = sprites.sl["pl_r_m_" + str(i)]
-                    globals.changeViewRel(OBJECT_WIDTH / 16, 0)
-                    draw.drawAll()
-                self.x += 1     
-                self.energie -=1
+                draw.anim("r", self)
+                self.energie -= 1
+                self.x = oldX + 1
                 globals.changeView(self.x, self.y)
+            self.resetPos()
+            oldX = self.x
+            oldY = self.y
             self.img = sprites.sl["pl_r_s"]
-        
+
         if self.x != oldX or self.y != oldY:
-            if type(globals.MAP[self.y][self.x]) is tile.Bed:
+            if type(self.getCurrentTile()) is tile.Bed:
                 if globals.Jour :
                     globals.Jour = False
                     print("day end")
