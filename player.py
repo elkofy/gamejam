@@ -100,3 +100,9 @@ class Player:
                 else :
                     globals.Jour = True
                     print("night end")
+            if type(globals.MAP[self.y][self.x]) is tile.Fruits:
+                self.energie += 10
+                globals.MAP[self.y][self.x] = tile.Tile(self.x, self.y)
+
+    def death():
+        None

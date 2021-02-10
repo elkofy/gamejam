@@ -107,7 +107,7 @@ class Fruits(Tile):
 
     def draw(self):
         Tile.draw(self)
-        globals.WIN.blit(sl[("f" if globals.Jour else "m") + "_" + self.sort], self.rect)
+        globals.WIN.blit(sl["f_" + self.sort], self.rect)
 
 class Bed(Tile):
     def __init__(self, x, y):
@@ -121,16 +121,3 @@ class Bed(Tile):
 class Trap(Tile):
     None
 
-def getTile(c, x, y):
-    if (chars[c] == "empty"):
-        return Tile(x, y)
-    elif (chars[c] == "spawn"):
-        return Spawn(x, y)
-    elif (chars[c] == "bed"):
-        return Bed(x, y)
-    elif (chars[c] == "wall"):
-        return Wall(x, y)
-    elif (chars[c] == "tomato"):
-        return Fruits(x, y, "tomato")
-    elif (chars[c] == "kiwi"):
-        return Fruits(x, y, "kiwi")

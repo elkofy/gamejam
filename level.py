@@ -3,6 +3,9 @@ import random
 import globals
 import pygame
 import tile
+import mobs
+
+chars = tile.chars
 
 def create(num):
     print("creating map " + str(num) + ".json : ")
@@ -29,7 +32,7 @@ def toTileMap(lvl = globals.MAP):
     for y in range(len(lvl)):
         map.append([])
         for x in range(len(lvl[y])):
-            map[y].append(tile.getTile(lvl[y][x], x, y))
+            map[y].append(getTile(lvl[y][x], x, y))
 
     return map
 
@@ -61,3 +64,24 @@ def cli(lvl = globals.LVL):
         for case in line:
             print(case + " ", end="")
         print("\n", end="")
+
+def getTile(c, x, y):
+    if (chars[c] == "empty"):
+        return tile.Tile(x, y)
+    elif (chars[c] == "spawn"):
+        return tile.Spawn(x, y)
+    elif (chars[c] == "bed"):
+        return tile.Bed(x, y)
+    elif (chars[c] == "wall"):
+        return tile.Wall(x, y)
+    elif (chars[c] == "tomato"):
+        if globals.Jour :
+            return tile.Fruits(x, y, "tomato")
+        else:
+            return mobs.Mob(x, y, "tomato", 1)
+    elif (chars[c] == "kiwi"):
+        if globals.Jour :
+            return tile.Fruits(x, y, "kiwi")
+        else:
+            return mobs.Mob(x, y, "kiwi", 1)
+    
