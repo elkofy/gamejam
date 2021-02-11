@@ -12,6 +12,8 @@ toLoad = {
     "light_day" : "decors/light_day.png",
     "light_night" : "decors/light_night.png",
     "vine" : "decors/vine.png",
+    "trap_on": "trap/on.png",
+    "trap_off": "trap/off.png"
 }
 
 def loadSprite(name, f, w = globals.OBJECT_WIDTH, h = globals.OBJECT_HEIGHT):

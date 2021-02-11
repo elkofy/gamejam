@@ -97,4 +97,7 @@ def getTile(c, x, y):
             return tile.Fruits(x, y, "kiwi", 7)
         else:
             return mobs.Mob(x, y, "kiwi", 1)
+
+    elif (chars[c] == "trap"):
+        return tile.Trap(x, y)
     

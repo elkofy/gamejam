@@ -9,7 +9,8 @@ chars = {
     "b" : "bed",
     "@" : "wall",
     "t" : "tomato",
-    "k" : "kiwi"
+    "k" : "kiwi",
+    "p" : "trap"
 }
 
 class Tile:
@@ -141,7 +142,25 @@ class Bed(Tile):
         Tile.draw(self)
         globals.WIN.blit(sl["bed"], self.rect)
 
-
 class Trap(Tile):
-    None
+    state = True
+    animTime = 0
+    
+    def __init__(self, x, y):
+        Tile.__init__(self, x, y)
+
+    def draw(self):
+        Tile.draw(self)
+        self.animTime += globals.LT
+        if self.animTime >= 1000:
+            self.animTime = 0
+            self.state = not self.state
+        if self.state:
+            globals.WIN.blit(sl["trap_on"], self.rect)
+            if globals.PLAYER.x == self.x and globals.PLAYER.y == self.y:
+                globals.PLAYER.death()
+        else:
+            globals.WIN.blit(sl["trap_off"], self.rect)
+        
+        
 

@@ -1,3 +1,4 @@
+from os import defpath
 import pygame
 from pygame.locals import*
 import colors
@@ -152,6 +153,9 @@ class Player:
                     globals.LVL_CHANGED = True
 
                 self.energie = MAX_ENERGY
+            if type(globals.MAP[self.y][self.x]) is tile.Trap:
+                if globals.MAP[self.y][self.x].state:
+                    self.death()
 
         
         if globals.Jour and self.energie <= 0:
