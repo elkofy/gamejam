@@ -6,17 +6,23 @@ from pygame.locals import*
 from globals import *
 import level
 import mobs
-import energy_bar
+import hud
 import sprites
 sprites.load()
 import player
 from player import *
+import fonts
+import score
+import save as s
+import pygame_menu
 
+pygame.init()
 pygame.display.set_caption("Organic Future");
 clock = pygame.time.Clock()
 pygame.font.init()
 player = Player()
 globals.PLAYER = player
+globals.SCORE = score.Score(globals.NAME)
 
 
 halfWidth = globals.WIDTH / 2
@@ -40,9 +46,14 @@ blindPoints = [
 ]
 
 def main():
+    globals.NAME = globals.NAME.get_value()
+    save = s.Save()
+    globals.NB_MORTS = globals.SCORE.get()
+    globals.NUM_LVL = save.get_lvl(globals.NAME)
     lvl = globals.NUM_LVL
     run = True
     load_lvl(lvl)
+    fonts.font_init()
     while run:
         globals.LT = clock.tick(60)
         if globals.LVL_CHANGED:
@@ -53,14 +64,19 @@ def main():
             m.drawMob()
         globals.PLAYER.draw() # player
         if globals.Jour: # day
-            energy_bar.draw_bar(globals.PLAYER.energie)
+            hud.draw_bar(globals.PLAYER.energie)
         else:# night
             pygame.draw.polygon(globals.WIN, colors.BLACK, blindPoints)
+        hud.draw_bar(globals.PLAYER.energie)
+        hud.draw_lvl()
+        hud.draw_deaths()
         pygame.display.flip() # show
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+                globals.SCORE.add(globals.NB_MORTS)
+                save.add(globals.NAME, globals.NUM_LVL)
         if not player.moving:
             player.move()
         else:

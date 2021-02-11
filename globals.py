@@ -17,9 +17,13 @@ MAX_ENERGY = 25
 Jour = True
 BLIND_RADIUS = 200
 NOCLIP = True
-LOGS = True
+LOGS = False
 NUM_LVL = 1
 LVL_CHANGED = False
+MAX_LEVEL = 2
+NAME = "Kids"
+NB_MORTS = 0
+SCORE = {}
 LT = None
 ### Animation Time (in ms)
 TIME_WALK = 200

@@ -53,10 +53,13 @@ class Mob(tile.Tile):
     def move(self):
         if self.walkTime >= globals.TIME_WALK:
             self.walkTime = 0
-            globals.MAP[self.y][self.x] = tile.Tile(self.x, self.y)
-            self.x = self.x + self.dirX
-            self.y = self.y + self.dirY
-            globals.MAP[self.y][self.x] = self
+            if type(globals.MAP[self.y + self.dirY][self.x + self.dirX]) is tile.Trap:
+                self.death()
+            else:
+                globals.MAP[self.y][self.x] = tile.Tile(self.x, self.y)
+                self.x = self.x + self.dirX
+                self.y = self.y + self.dirY
+                globals.MAP[self.y][self.x] = self
             
             self.endCheck = globals.isWall(self.x + self.dirX, self.y + self.dirY)
             self.walking = not self.endCheck
