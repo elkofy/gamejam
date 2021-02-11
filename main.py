@@ -13,6 +13,8 @@ import player
 from player import *
 import fonts
 import score
+import save as s
+import pygame_menu
 
 pygame.init()
 pygame.display.set_caption("Organic Future");
@@ -44,7 +46,10 @@ blindPoints = [
 ]
 
 def main():
+    globals.NAME = globals.NAME.get_value()
+    save = s.Save()
     globals.NB_MORTS = globals.SCORE.get()
+    globals.NUM_LVL = save.get_lvl(globals.NAME)
     lvl = globals.NUM_LVL
     run = True
     load_lvl(lvl)
@@ -69,7 +74,7 @@ def main():
             if event.type == pygame.QUIT:
                 run = False
                 globals.SCORE.add(globals.NB_MORTS)
-        
+                save.add(globals.NAME, globals.NUM_LVL)
         player.move()
         for i in mobs.mobs:
             i.move()
