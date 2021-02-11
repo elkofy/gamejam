@@ -5,6 +5,13 @@ c = 0
 
 sl = {}
 
+dirr = {
+    "up" : "u",
+    "left" : "l",
+    "right" : "r",
+    "down" : "d"
+}
+
 toLoad = {
     "bg_tile" : "decors/sol.png",
     "spawn" : "start.png",
@@ -22,7 +29,7 @@ def loadSprite(name, f, w = globals.OBJECT_WIDTH, h = globals.OBJECT_HEIGHT):
     global sprites
     
     if globals.LOGS:
-        print("loading assets/" + f + " : ", end="")
+        print("loading assets/" + f + " to " + name + " : ", end="")
     img = pygame.image.load("assets/" + f)
     img = pygame.transform.scale(img, (w, h))
     img.convert()
@@ -31,18 +38,16 @@ def loadSprite(name, f, w = globals.OBJECT_WIDTH, h = globals.OBJECT_HEIGHT):
     if globals.LOGS:
         print("loaded")
 
+def loadIcon():
+    for i in range(44):
+        loadSprite("icon_" + str(i), "icon/" + str(i) + ".png")
+
 def loadWall():
     global wallSprites
     for i in range(29):
         loadSprite("wall_" + str(i), "wall/" + str(i) + ".png")
 
 def loadPlayer():
-    dirr = {
-        "up" : "u",
-        "left" : "l",
-        "right" : "r",
-        "down" : "d"
-    }
 
     for d in dirr:
         loadSprite("pl_" + dirr[d] + "_s", "player/" + d + "/static.png", globals.PLAYER_WIDTH, globals.PLAYER_HEIGHT)
@@ -53,7 +58,8 @@ def loadPlayer():
 def loadFruits():
     fruits = {
         "kiwi" : 7,
-        "tomato" : 6
+        "tomato" : 6,
+        "lemon" : 1
     }
 
     for f in fruits:
@@ -61,25 +67,40 @@ def loadFruits():
             loadSprite("f_" + f + "_" + str(i), "fruits/" + f + "/" + str(i) + ".png")
 
 def loadMonsters():
-    """mobs = {
-        "kiwi" : 44,
-        "tomato" : 54
-    }"""
+    mobs = {
+        "kiwi" : {
+            "up" : 44,
+            "left" : 41,
+            "right" : 41,
+            "down" : 44,
+        },
+        "tomato" : {
+            "up" : 54,
+            "left" : 54,
+            "right" : 54,
+            "down" : 54,
+        },
+        "lemon" : {
+            "up" : 8,
+            "left" : 8,
+            "right" : 8,
+            "down" : 8,
+        }
+    }
 
-    for i in range(54):
-        loadSprite("m_tomato_d_" + str(i), "mobs/tomato/down/" + str(i) + ".png")
-        loadSprite("m_tomato_r_" + str(i), "mobs/tomato/right/" + str(i) + ".png")
-
-    for i in range(44):
-        loadSprite("m_kiwi_d_" + str(i), "mobs/kiwi/down/" + str(i) + ".png")
+    for m in mobs:
+        for d in dirr:
+            for i in range(mobs[m][d]):
+                loadSprite("m_" + m + "_" + dirr[d] + "_" + str(i), "mobs/" + m + "/" + d + "/" + str(i) + ".png")
 
 def load():
-    loadSprite("blind", "blind.png", globals.WIDTH, globals.HEIGHT)
-
+    loadIcon()
     loadWall()
     loadPlayer()
     loadFruits()
     loadMonsters()
+
+    loadSprite("end_screen", "wscreen.png", globals.WIDTH, globals.HEIGHT)
 
     for spr in toLoad:
         loadSprite(spr, toLoad[spr])

@@ -1,11 +1,11 @@
 import pygame
 import globals
 import score
+import sprites
 
 #globals.WIN = pygame.display.set_mode((globals.WIDTH, globals.HEIGHT));
 def end_screen():
-  globals.WIN = pygame.display.set_mode((globals.WIDTH, globals.HEIGHT));
-  bg= pygame.image.load('assets/wscreen.png')
+  globals.WIN = pygame.display.set_mode((globals.WIDTH, globals.HEIGHT))
   pygame.display.flip()
   alive= True
 
@@ -16,8 +16,8 @@ def end_screen():
       if event.type == pygame.QUIT:
         alive = False
       globals.WIN.fill((255,255,255))
-      globals.WIN.blit(bg,(0,0))
+      globals.WIN.blit(sprites.sl["end_screen"],(0,0))
       pygame.display.flip()
 
 
-  pygame.quit()    
+  pygame.quit()
