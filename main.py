@@ -57,9 +57,7 @@ def main():
         globals.WIN.fill(colors.GREY) # background
         level.show(globals.MAP) # tiles
         globals.PLAYER.draw() # player
-        if globals.Jour: # day
-            energy_bar.draw_bar(globals.PLAYER.energie)
-        else:# night 
+        if not globals.Jour: # day
             #globals.WIN.blit(sprites.sl["blind"], blindFilter)
             pygame.draw.polygon(globals.WIN, colors.BLACK, blindPoints)
         hud.draw_bar(globals.PLAYER.energie)
