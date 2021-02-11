@@ -43,28 +43,31 @@ def main():
     lvl = globals.NUM_LVL
     run = True
     load_lvl(lvl)
-    blindFilter = pygame.Rect(0, 0, globals.WIDTH, globals.HEIGHT)
     while run:
         globals.LT = clock.tick(60)
         if globals.LVL_CHANGED:
             load_lvl(globals.NUM_LVL)
         globals.WIN.fill(colors.GREY) # background
         level.show(globals.MAP) # tiles
+        for m in mobs.mobs:
+            m.drawMob()
         globals.PLAYER.draw() # player
         if globals.Jour: # day
             energy_bar.draw_bar(globals.PLAYER.energie)
-        else:# night 
-            #globals.WIN.blit(sprites.sl["blind"], blindFilter)
+        else:# night
             pygame.draw.polygon(globals.WIN, colors.BLACK, blindPoints)
         pygame.display.flip() # show
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
-        
-        player.move()
-        for i in mobs.mobs:
-            i.move()
+        if not player.moving:
+            player.move()
+        else:
+            player.moveAnim()
+        player.checkState()
+        for m in mobs.mobs:
+            m.act()
 
     pygame.quit()
 

@@ -91,10 +91,10 @@ def getTile(c, x, y):
         if globals.Jour :
             return tile.Fruits(x, y, "tomato", 6)
         else:
-            return mobs.Mob(x, y, "tomato", 1)
+            return mobs.Mob(x, y, "tomato", "d", 54)
     elif (chars[c] == "kiwi"):
         if globals.Jour :
             return tile.Fruits(x, y, "kiwi", 7)
         else:
-            return mobs.Mob(x, y, "kiwi", 1)
+            return mobs.Mob(x, y, "kiwi", "d", 44)
     

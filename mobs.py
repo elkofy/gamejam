@@ -1,3 +1,4 @@
+import pygame
 import globals
 from globals import *
 import tile
@@ -9,52 +10,74 @@ class Directions(Enum):
     Down = 1
     Left = 2
     Right = 3
-class Mob(tile.Tile):        
-    dirX = 0
-    dirY = 0
+class Mob(tile.Tile):
     sort = None
     speed = 30
     walking = False
 
-    def __init__(self, x, y, sort, dir):
+    def __init__(self, x, y, sort, dir, nbS):
         global mobs
         Tile.__init__(self, x, y)
+        self.animTime = 0
+        self.walkTime = 0
         self.sort = sort
         self.setDir(dir)
+        self.nbS = nbS
+        self.endCheck = False
+        self.walkRect = self.rect.copy()
         mobs.append(self)
         print(sort + str(globals.Jour))
 
+    def setDir(self, dir):
+        self.dir = dir
+        if self.dir == "u":
+            self.dirX = 0
+            self.dirY = -1
+        elif self.dir == "l":
+            self.dirX = -1
+            self.dirY = 0
+        elif self.dir == "r":
+            self.dirX = 1
+            self.dirY = 0
+        elif self.dir == "d":
+            self.dirX = 0
+            self.dirY = 1
 
     def draw(self):
         Tile.draw(self)
-        globals.WIN.blit(sl["m_" + self.sort], self.rect)
+
+    def drawMob(self):
+        globals.WIN.blit(sl["m_" + self.sort + "_" + self.dir + "_" + str(int(self.animTime/globals.TIME_MONSTER * self.nbS))], (self.walkRect if self.walking else self.rect))
+
 
     def move(self):
-        self.speed += 1
-        if self.speed >= 30 and self.walking and not globals.isWall(self.x + self.dirX, self.y + self.dirY):
-                globals.MAP[self.y][self.x] = tile.Tile(self.x, self.y)
-                self.x += self.dirX
-                self.y += self.dirY
-                globals.MAP[self.y][self.x] = self
-                self.speed = 0
-        if self.isPlayerVisible():
-            self.walking = True
+        if self.walkTime >= globals.TIME_WALK:
+            self.walkTime = 0
+            globals.MAP[self.y][self.x] = tile.Tile(self.x, self.y)
+            self.x = self.x + self.dirX
+            self.y = self.y + self.dirY
+            globals.MAP[self.y][self.x] = self
             
+            self.endCheck = globals.isWall(self.x + self.dirX, self.y + self.dirY)
+            self.walking = not self.endCheck
+        else:
+            self.walkTime += globals.LT
+            self.walkRect.x = globals.calcX(self.x) - globals.marginLeft + self.dirX * (self.walkTime / globals.TIME_WALK * globals.OBJECT_WIDTH)
+            self.walkRect.y = globals.calcY(self.y) - globals.marginTop + self.dirY * (self.walkTime / globals.TIME_WALK * globals.OBJECT_WIDTH)
 
-    def setDir(self, dir):
-        if dir == 2:
-            self.dirX = -1
-            self.dirY = 0
-        if dir == 3:
-            self.dirX = 1
-            self.dirY = 0
-        if dir == 0:
-            self.dirX = 0
-            self.dirY = -1
-        if dir == 1:
-            self.dirX = 0
-            self.dirY = 1
-    
+    def act(self):
+        self.animTime = (self.animTime + globals.LT) % globals.TIME_MONSTER
+
+        if globals.PLAYER.getCurrentTile() == self:
+            globals.PLAYER.death()
+
+        if not self.endCheck:
+            if self.walking:
+                self.move()
+            else:
+                if self.isPlayerVisible():
+                    self.walking = True
+                    
     def isPlayerVisible(self):
         x = self.x + self.dirX
         y = self.y + self.dirY
@@ -68,4 +91,6 @@ class Mob(tile.Tile):
 
         return False
         
-
+    def death(self):
+        mobs.remove(self)
+        self = tile.Tile(self.x, self.y)
