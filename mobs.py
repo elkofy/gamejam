@@ -29,9 +29,9 @@ class Mob(tile.Tile):
         self.walkRect = self.rect.copy()
         mobs.append(self)
         self.walking_sound = pygame.mixer.Sound("assets/sounds/mob1.wav")
-        self.walking_sound.set_volume(0.1)
+        self.walking_sound.set_volume(0.2)
         self.death_sound = pygame.mixer.Sound("assets/sounds/mob2.wav")
-        self.death_sound.set_volume(0.1)
+        self.death_sound.set_volume(0.2)
 
     def setDir(self, dir):
         self.dir = dir
