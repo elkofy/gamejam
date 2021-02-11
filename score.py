@@ -16,6 +16,7 @@ class Score():
         f.write(json.dumps(self.score))
     
     def get(self):
+        print('get', self.name)
         if not self.name in self.score:
             return 0
         else:   

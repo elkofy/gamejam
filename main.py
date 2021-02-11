@@ -16,14 +16,9 @@ import score
 import save as s
 import pygame_menu
 
-pygame.init()
 pygame.display.set_caption("Organic Future");
 clock = pygame.time.Clock()
 pygame.font.init()
-player = Player()
-globals.PLAYER = player
-globals.SCORE = score.Score(globals.NAME)
-
 
 halfWidth = globals.WIDTH / 2
 haldHeight = globals.HEIGHT / 2
@@ -46,14 +41,19 @@ blindPoints = [
 ]
 
 def main():
+    #pygame.mixer.music.load('assets/sounds/theme_1.wav')
+    #pygame.mixer.music.play(-1)
+    player = Player()
+    globals.PLAYER = player
     globals.NAME = globals.NAME.get_value()
+    globals.SCORE = score.Score(globals.NAME)
     save = s.Save()
     globals.NB_MORTS = globals.SCORE.get()
+    print("NB_morts", globals.NB_MORTS)
     globals.NUM_LVL = save.get_lvl(globals.NAME)
     lvl = globals.NUM_LVL
     run = True
     load_lvl(lvl)
-    fonts.font_init()
     blindFilter = pygame.Rect(0, 0, globals.WIDTH, globals.HEIGHT)
     while run:
         globals.LT = clock.tick(60)
@@ -90,7 +90,7 @@ def load_lvl(num_lvl):
     spawnX = spawnTile.x
     spawnY = spawnTile.y
     globals.changeView(spawnX, spawnY)
-    player.load(spawnX, spawnY)
+    globals.PLAYER.load(spawnX, spawnY)
     globals.LVL_CHANGED = False
     if globals.LOGS:
         level.cli(globals.LVL)
