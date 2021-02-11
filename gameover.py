@@ -4,12 +4,12 @@ import score
 
 #globals.WIN = pygame.display.set_mode((globals.WIDTH, globals.HEIGHT));
 def end_screen():
+  globals.WIN = pygame.display.set_mode((globals.WIDTH, globals.HEIGHT));
   bg= pygame.image.load('assets/wscreen.png')
   pygame.display.flip()
   alive= True
 
-  globals.SCORE.add(globals.NAME, globals.NB_MORTS)
-
+  globals.SCORE.add(globals.NB_MORTS)
   while alive:
     
     for event in pygame.event.get():
@@ -20,4 +20,4 @@ def end_screen():
       pygame.display.flip()
 
 
-pygame.quit()    
+  pygame.quit()    

@@ -7,6 +7,7 @@ from enum import Enum
 import sprites
 import time
 import tile
+import gameover
 NB_SPRITE = 16
 
 class Directions(Enum):
@@ -145,7 +146,7 @@ class Player:
                         globals.LVL_CHANGED = True
                         globals.NUM_LVL += 1
                     else:
-                        None
+                        gameover.end_screen()
                 else:
                     globals.Jour = False
                     globals.LVL_CHANGED = True
