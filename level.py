@@ -8,23 +8,36 @@ import mobs
 chars = tile.chars
 
 def create(num):
-    print("creating map " + str(num) + ".json : ")
+    if globals.LOGS:
+        print("creating map " + str(num) + ".json : ")
     
     f = open("levels/" + str(num) + ".json", "w")
     lvl = randomlvl()
     f.write(json.dumps(lvl))
 
-    print("created")
+    
+    if globals.LOGS:
+        print("created")
 
 def load(num):
-    print("loading map " + str(num) + " : ", end="")
+    if globals.LOGS:
+        print("loading map " + str(num) + " : ", end="")
 
     f_levels = open("levels/" + str(num) + ".json", "r")
     data = f_levels.read()
     lvl = json.loads(data)
 
-    print("loaded")
+    if globals.LOGS:
+        print("loaded")
 
+    maxW = 0
+    for line in lvl:
+        if len(line) > maxW:
+            maxW = len(line)
+
+    globals.GAME_HEIGHT = len(lvl)
+    globals.GAME_WIDTH = maxW
+    
     return lvl
 
 def toTileMap(lvl = globals.MAP):
@@ -67,7 +80,7 @@ def cli(lvl = globals.LVL):
 
 def getTile(c, x, y):
     if (chars[c] == "empty"):
-        return tile.Tile(x, y)
+        return tile.Empty(x, y)
     elif (chars[c] == "spawn"):
         return tile.Spawn(x, y)
     elif (chars[c] == "bed"):
@@ -76,12 +89,12 @@ def getTile(c, x, y):
         return tile.Wall(x, y)
     elif (chars[c] == "tomato"):
         if globals.Jour :
-            return tile.Fruits(x, y, "tomato")
+            return tile.Fruits(x, y, "tomato", 6)
         else:
             return mobs.Mob(x, y, "tomato", 1)
     elif (chars[c] == "kiwi"):
         if globals.Jour :
-            return tile.Fruits(x, y, "kiwi")
+            return tile.Fruits(x, y, "kiwi", 7)
         else:
             return mobs.Mob(x, y, "kiwi", 1)
     
