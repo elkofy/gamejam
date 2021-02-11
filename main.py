@@ -22,6 +22,7 @@ import fade
 
 pygame.init()
 pygame.display.set_caption("Organic Future");
+pygame.display.set_icon(sprites.sl['pl_d_s'])
 clock = pygame.time.Clock()
 pygame.font.init()
 
@@ -45,6 +46,14 @@ blindPoints = [
     (0, globals.HEIGHT),
 ]
 
+
+iconIT = 0
+
+def gameIcon():
+    global iconIT
+    iconIT = iconIT % (7 if globals.Jour else 44)
+    pygame.display.set_icon(sprites.sl[("f_kiwi_" if globals.Jour else "icon_") + str(iconIT)])
+    iconIT += 1
 def main():
     pygame.mixer.music.load('assets/sounds/theme_1.wav')
     pygame.mixer.music.set_volume(0.03)
@@ -63,7 +72,8 @@ def main():
     fonts.font_init()
     while run:
         globals.LT = clock.tick(60)
-        
+        gameIcon()
+
         if globals.LVL_CHANGED:
             load_lvl(globals.NUM_LVL)
         
