@@ -7,6 +7,7 @@ from enum import Enum
 import sprites
 import time
 import tile
+NB_SPRITE = 16
 
 class Directions(Enum):
     Up = 0
@@ -32,7 +33,7 @@ class Player:
     def load(self, x, y):
         self.moving = False
         self.dirr = None
-        self.iSprite = 0
+        self.animTime = 0
         self.img.convert()
         self.rect = self.img.get_rect()
 
@@ -68,20 +69,32 @@ class Player:
         globals.WIN.blit(self.img, self.rect)
     
     def moveAnim(self, dirr):
-        
-        if dirr == "u":
-            globals.changeViewY(- OBJECT_HEIGHT / 16)
-        elif dirr == "l":
-            globals.changeViewX(- OBJECT_HEIGHT / 16)
-        elif dirr == "r":
-            globals.changeViewX(OBJECT_HEIGHT / 16)
-        elif dirr == "d":
-            globals.changeViewY(OBJECT_HEIGHT / 16)
+        self.animTime += globals.LT
 
-        self.img = sprites.sl["pl_" + dirr + "_m_" + str(self.iSprite)]
-        self.iSprite = (self.iSprite + 1) % 16
-        if self.iSprite == 0:
+        if self.animTime >= globals.TIME_WALK:
             self.moving = False
+            self.animTime = 0
+            if dirr == "u":
+                    self.y -= 1
+            elif dirr == "l":
+                    self.x -= 1
+            elif dirr == "r":
+                    self.x += 1
+            elif dirr == "d":
+                    self.y += 1
+            self.img = sprites.sl["pl_" + dirr + "_s"]
+            globals.changeView(self.x, self.y)
+        else:
+            if dirr == "u":
+                globals.changeViewY(calcX(self.y) - (HEIGHT / 2) + OBJECT_HEIGHT / 2 - (self.animTime/globals.TIME_WALK * OBJECT_HEIGHT))
+            elif dirr == "l":
+                globals.changeViewX(calcX(self.x) - (WIDTH / 2) + OBJECT_WIDTH / 2 - (self.animTime/globals.TIME_WALK * OBJECT_WIDTH))
+            elif dirr == "r":
+                globals.changeViewX(calcX(self.x) - (WIDTH / 2) + OBJECT_WIDTH / 2 + (self.animTime/globals.TIME_WALK * OBJECT_WIDTH))
+            elif dirr == "d":
+                globals.changeViewY(calcX(self.y) - (HEIGHT / 2) + OBJECT_HEIGHT / 2 + (self.animTime/globals.TIME_WALK * OBJECT_HEIGHT))
+
+            self.img = sprites.sl["pl_" + dirr + "_m_" + str(int((self.animTime/globals.TIME_WALK) * NB_SPRITE))]
 
     def move(self):
         keys=pygame.key.get_pressed()
@@ -91,33 +104,29 @@ class Player:
 
         if not self.moving:
             if keys[K_z] or keys[K_UP]:
-                if globals.NOCLIP or not isWall(self.x, self.y -1):
+                if (globals.NOCLIP and self.y > 0) or not isWall(self.x, self.y -1):
                     self.moving = True
                     self.dirr = "u"
-                    self.y -= 1
                     self.energie -= 1
                 self.img = sprites.sl["pl_u_s"]
             elif keys[K_s] or keys[K_DOWN]:
-                if globals.NOCLIP or not isWall(self.x, self.y +1):
+                if(globals.NOCLIP and self.y < len(globals.LVL) - 1) or not isWall(self.x, self.y +1):
                     self.moving = True
                     self.dirr = "d"
-                    self.y += 1
                     self.moving = True
                     self.energie -= 1
                 self.img = sprites.sl["pl_d_s"]
             elif keys[K_q] or keys[K_LEFT]:
-                if globals.NOCLIP or not isWall(self.x -1, self.y):
+                if (globals.NOCLIP and self.x > 0) or not isWall(self.x -1, self.y):
                     self.moving = True
                     self.dirr = "l"
-                    self.x -= 1
                     self.moving = True
                     self.energie -= 1
                 self.img = sprites.sl["pl_l_s"]
             elif keys[K_d] or keys[K_RIGHT]:
-                if globals.NOCLIP or not isWall(self.x + 1, self.y):
+                if (globals.NOCLIP and self.x < len(globals.LVL[self.y]) - 1) or not isWall(self.x + 1, self.y):
                     self.moving = True
                     self.dirr = "r"
-                    self.x += 1
                     self.moving = True
                     self.energie -= 1
                 self.img = sprites.sl["pl_r_s"]
