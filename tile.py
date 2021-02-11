@@ -34,20 +34,21 @@ class Tile:
 class Empty(Tile):
     def __init__(self, x, y):
         Tile.__init__(self, x, y)
-        self.light = False
-        self.vine = False
         dice = random.randint(0, 100)
-        if dice <= 6:
-            self.light = True
-        elif dice <= 12:
-            self.vine = True
+        if dice <= 4:
+            self.deco = 1
+        elif dice <= 8:
+            self.deco = 2
+        else:
+            self.deco = 0
     
     def draw(self):
         Tile.draw(self)
-        if self.light:
-            globals.WIN.blit(sl['light_' + ("day" if globals.Jour else "night")], self.rect)
-        elif self.vine:
-            globals.WIN.blit(sl["vine"], self.rect)
+        if self.deco != 0:
+            if self.deco == 1:
+                globals.WIN.blit(sl['light_' + ("day" if globals.Jour else "night")], self.rect)
+            if self.deco == 2:
+                globals.WIN.blit(sl["grating"], self.rect)
 
 class Wall(Tile):
 
