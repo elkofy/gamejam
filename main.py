@@ -4,48 +4,80 @@ globals.WIN = pygame.display.set_mode((globals.WIDTH, globals.HEIGHT));
 import colors
 from pygame.locals import*
 from globals import *
-import objects
-objects.loadSprites()
+import level
+import mobs
+import energy_bar
+import sprites
+sprites.load()
 import player
 from player import *
-import level
 
-import energy_bar
-import mobs
-
-pygame.display.set_caption("Organic future");
+pygame.display.set_caption("Organic Future");
 clock = pygame.time.Clock()
-player = Player()
 pygame.font.init()
+player = Player()
+globals.PLAYER = player
 
-m_tomato = mobs.Mob();
 
+halfWidth = globals.WIDTH / 2
+haldHeight = globals.HEIGHT / 2
+blindPoints = [
+    (0, 0),
+    (halfWidth, 0),
+    (halfWidth, haldHeight - BLIND_RADIUS),
+    (halfWidth - BLIND_RADIUS/4*3, haldHeight - BLIND_RADIUS/4*3),
+    (halfWidth - BLIND_RADIUS, haldHeight),
+    (halfWidth - BLIND_RADIUS/4*3, haldHeight + BLIND_RADIUS/4*3),
+    (halfWidth, haldHeight + BLIND_RADIUS),
+    (halfWidth + BLIND_RADIUS/4*3, haldHeight + BLIND_RADIUS/4*3),
+    (halfWidth + BLIND_RADIUS, haldHeight),
+    (halfWidth + BLIND_RADIUS/4*3, haldHeight - BLIND_RADIUS/4*3),
+    (halfWidth, haldHeight - BLIND_RADIUS),
+    (halfWidth, 0),
+    (globals.WIDTH, 0),
+    (globals.WIDTH, globals.HEIGHT),
+    (0, globals.HEIGHT),
+]
 
 def main():
+    lvl = globals.NUM_LVL
     run = True
-    
-    globals.changeView(16, 18)
-    globals.LVL = level.load(2)
-    # level.cli(globals.lvl)
-    player.load(16, 18)
-    m_tomato.load(20, 14)
+    load_lvl(lvl)
+    blindFilter = pygame.Rect(0, 0, globals.WIDTH, globals.HEIGHT)
     while run:
-        #clock.tick(60)
-        objects.drawBG()
-        level.show(globals.LVL)
+        globals.LT = clock.tick(60)
+        if globals.LVL_CHANGED:
+            load_lvl(globals.NUM_LVL)
+        globals.WIN.fill(colors.GREY) # background
+        level.show(globals.MAP) # tiles
+        globals.PLAYER.draw() # player
+        if globals.Jour: # day
+            energy_bar.draw_bar(globals.PLAYER.energie)
+        else:# night 
+            #globals.WIN.blit(sprites.sl["blind"], blindFilter)
+            pygame.draw.polygon(globals.WIN, colors.BLACK, blindPoints)
+        pygame.display.flip() # show
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+        
         player.move()
-        player.draw()
-        m_tomato.move()
-        m_tomato.draw()
-        energy_bar.draw_bar(player.energie)
-        pygame.display.flip()
-        if not player.energie >= 0:
-            pass
-            #todo Home Screen / Level Screen / Game Over Screen
+        for i in mobs.mobs:
+            i.move()
+
     pygame.quit()
 
 
-
+def load_lvl(num_lvl):
+    mobs.mobs = []
+    globals.LVL = level.load(num_lvl)
+    globals.MAP = level.toTileMap(globals.LVL)
+    spawnTile = level.getSpawn(globals.MAP)
+    spawnX = spawnTile.x
+    spawnY = spawnTile.y
+    globals.changeView(spawnX, spawnY)
+    player.load(spawnX, spawnY)
+    globals.LVL_CHANGED = False
+    if globals.LOGS:
+        level.cli(globals.LVL)

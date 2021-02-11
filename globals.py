@@ -1,7 +1,7 @@
 WIDTH = 1024
 HEIGHT = 768
 GAME_WIDTH = 30
-GAME_HEIGHT = GAME_WIDTH
+GAME_HEIGHT = 30
 OBJECT_WIDTH = 64
 OBJECT_HEIGHT = OBJECT_WIDTH
 PLAYER_SCALE = 0.85
@@ -11,9 +11,20 @@ marginTop = None
 marginLeft = None
 WIN = None
 LVL = None
-MAX_ENERGY = 10
-blind = False
+MAP = None
+PLAYER = None
+MAX_ENERGY = 25
 Jour = True
+BLIND_RADIUS = 200
+NOCLIP = True
+LOGS = True
+NUM_LVL = 1
+LVL_CHANGED = False
+LT = None
+### Animation Time (in ms)
+TIME_WALK = 200
+TIME_FRUITS = 1400
+
 #pixel_font = pygame.font.Font("assets/pixel_font.ttf", 26)
 
 def calcX(x):
@@ -39,3 +50,11 @@ def changeView(x, y):
     global marginTop
     marginLeft = calcX(x) - (WIDTH / 2) + OBJECT_WIDTH / 2
     marginTop = calcY(y) - (HEIGHT / 2) + OBJECT_HEIGHT / 2
+
+def changeViewX(x):
+    global marginLeft
+    marginLeft = x
+
+def changeViewY(y):
+    global marginTop
+    marginTop = y
