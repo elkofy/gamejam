@@ -10,7 +10,6 @@ class Score():
         data = f_levels.read()
         self.score = json.loads(data)
 
-
     def add(self, score):
         self.score[self.name] = score
         f = open("scores.json", "w")

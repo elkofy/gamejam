@@ -1,3 +1,4 @@
+from os import defpath
 import pygame
 from pygame.locals import*
 import colors
@@ -7,6 +8,7 @@ from enum import Enum
 import sprites
 import time
 import tile
+import gameover
 NB_SPRITE = 16
 
 class Directions(Enum):
@@ -145,12 +147,15 @@ class Player:
                         globals.LVL_CHANGED = True
                         globals.NUM_LVL += 1
                     else:
-                        None
+                        gameover.end_screen()
                 else:
                     globals.Jour = False
                     globals.LVL_CHANGED = True
 
                 self.energie = MAX_ENERGY
+            if type(globals.MAP[self.y][self.x]) is tile.Trap:
+                if globals.MAP[self.y][self.x].state:
+                    self.death()
 
         
         if globals.Jour and self.energie <= 0:

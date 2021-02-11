@@ -32,11 +32,11 @@ class Mob(tile.Tile):
     def move(self):
         self.speed += 1
         if self.speed >= 30 and self.walking and not globals.isWall(self.x + self.dirX, self.y + self.dirY):
-                globals.MAP[self.y][self.x] = tile.Tile(self.x, self.y)
-                self.x += self.dirX
-                self.y += self.dirY
-                globals.MAP[self.y][self.x] = self
-                self.speed = 0
+            globals.MAP[self.y][self.x] = tile.Tile(self.x, self.y)
+            self.x += self.dirX
+            self.y += self.dirY
+            globals.MAP[self.y][self.x] = self
+            self.speed = 0
         if self.isPlayerVisible():
             self.walking = True
         
@@ -70,5 +70,4 @@ class Mob(tile.Tile):
                 y = y + self.dirY
 
         return False
-        
 

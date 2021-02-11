@@ -15,5 +15,4 @@ def lvl1():
     
     
     msg1.draw(globals.WIN)
-    pygame.time.delay(3000)
     globals.WIN.fill(colors.GREY)
