@@ -140,9 +140,12 @@ class Player:
             if type(globals.MAP[self.y][self.x]) is tile.Bed:
                 print(globals.Jour)
                 if not globals.Jour:
+                    if globals.NUM_LVL < globals.MAX_LEVEL:
                         globals.Jour = True
                         globals.LVL_CHANGED = True
                         globals.NUM_LVL += 1
+                    else:
+                        None
                 else:
                     globals.Jour = False
                     globals.LVL_CHANGED = True
@@ -155,6 +158,7 @@ class Player:
     
 
     def death(self):
+        globals.NB_MORTS += 1
         if not globals.Jour:
             globals.Jour = True
         globals.LVL_CHANGED = True

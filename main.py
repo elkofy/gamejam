@@ -6,17 +6,21 @@ from pygame.locals import*
 from globals import *
 import level
 import mobs
-import energy_bar
+import hud
 import sprites
 sprites.load()
 import player
 from player import *
+import fonts
+import score
 
+pygame.init()
 pygame.display.set_caption("Organic Future");
 clock = pygame.time.Clock()
 pygame.font.init()
 player = Player()
 globals.PLAYER = player
+globals.SCORE = score.Score(globals.NAME)
 
 
 halfWidth = globals.WIDTH / 2
@@ -40,9 +44,11 @@ blindPoints = [
 ]
 
 def main():
+    globals.NB_MORTS = globals.SCORE.get()
     lvl = globals.NUM_LVL
     run = True
     load_lvl(lvl)
+    fonts.font_init()
     blindFilter = pygame.Rect(0, 0, globals.WIDTH, globals.HEIGHT)
     while run:
         globals.LT = clock.tick(60)
@@ -51,16 +57,18 @@ def main():
         globals.WIN.fill(colors.GREY) # background
         level.show(globals.MAP) # tiles
         globals.PLAYER.draw() # player
-        if globals.Jour: # day
-            energy_bar.draw_bar(globals.PLAYER.energie)
-        else:# night 
+        if not globals.Jour: # day
             #globals.WIN.blit(sprites.sl["blind"], blindFilter)
             pygame.draw.polygon(globals.WIN, colors.BLACK, blindPoints)
+        hud.draw_bar(globals.PLAYER.energie)
+        hud.draw_lvl()
+        hud.draw_deaths()
         pygame.display.flip() # show
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+                globals.SCORE.add(globals.NB_MORTS)
         
         player.move()
         for i in mobs.mobs:
