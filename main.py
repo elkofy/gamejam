@@ -18,6 +18,7 @@ import fonts
 import pygame_menu
 import score 
 import dialogue
+import fade
 
 pygame.init()
 pygame.display.set_caption("Organic Future");
@@ -54,8 +55,9 @@ def gameIcon():
     pygame.display.set_icon(sprites.sl[("f_kiwi_" if globals.Jour else "icon_") + str(iconIT)])
     iconIT += 1
 def main():
-    #pygame.mixer.music.load('assets/sounds/theme_1.wav')
-    #pygame.mixer.music.play(-1)
+    pygame.mixer.music.load('assets/sounds/theme_1.wav')
+    pygame.mixer.music.set_volume(0.03)
+    pygame.mixer.music.play(-1)
     player = Player()
     globals.PLAYER = player
     globals.NAME = globals.NAME.get_value()
@@ -124,3 +126,4 @@ def load_lvl(num_lvl):
     globals.LVL_CHANGED = False
     if globals.LOGS:
         level.cli(globals.LVL)
+    fade.fade()

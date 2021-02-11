@@ -151,7 +151,7 @@ class Trap(Tile):
     def __init__(self, x, y):
         Tile.__init__(self, x, y)
         self.sound = self.step_sound = pygame.mixer.Sound("assets/sounds/buzz.wav")
-        self.sound.set_volume(0.035)
+        self.sound.set_volume(0.015)
 
     def draw(self):
         Tile.draw(self)

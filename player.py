@@ -9,6 +9,7 @@ import sprites
 import time
 import tile
 import gameover
+import fade
 NB_SPRITE = 16
 
 
@@ -29,6 +30,9 @@ class Player:
     energie = MAX_ENERGY
     walking_Cpt = 0
     step_sound = None
+    eat_sound = None
+    zz_sound = None
+    snork_sound = None
 
     def resetPos(self):
         self.rect.x = calcX(self.x) - globals.marginLeft + ((1 - globals.PLAYER_SCALE)/2 * globals.OBJECT_WIDTH)
@@ -37,6 +41,13 @@ class Player:
     def load(self, x, y):
         self.step_sound = pygame.mixer.Sound("assets/sounds/foot.wav")
         self.step_sound.set_volume(0.2)
+        self.eat_sound = pygame.mixer.Sound("assets/sounds/miam.wav")
+        self.eat_sound.set_volume(0.2)
+        self.zz_sound = pygame.mixer.Sound("assets/sounds/zzz.wav")
+        self.zz_sound.set_volume(0.2)
+        self.zz_sound = pygame.mixer.Sound("assets/sounds/snork.wav")
+        self.zz_sound.set_volume(0.2)
+        self.zz_sound.play()
         self.moving = False
         self.dirr = None
         self.animTime = 0
@@ -77,9 +88,11 @@ class Player:
     def checkState(self):
         if type(globals.MAP[self.y][self.x]) is tile.Fruits:
             self.energie += 10
+            self.eat_sound.play()
             globals.MAP[self.y][self.x] = tile.Tile(self.x, self.y)
         if type(globals.MAP[self.y][self.x]) is tile.Bed:
             print(globals.Jour)
+            self.zz_sound.play()
             if not globals.Jour:
                 if globals.NUM_LVL < globals.MAX_LEVEL:
                     globals.Jour = True
