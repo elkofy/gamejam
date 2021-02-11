@@ -18,6 +18,10 @@ Jour = True
 NOCLIP = False
 NUM_LVL = 1
 LVL_CHANGED = False
+MAX_LEVEL = 2
+NAME = "Kids"
+NB_MORTS = 0
+SCORE = {}
 #pixel_font = pygame.font.Font("assets/pixel_font.ttf", 26)
 
 def calcX(x):

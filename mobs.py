@@ -39,6 +39,9 @@ class Mob(tile.Tile):
                 self.speed = 0
         if self.isPlayerVisible():
             self.walking = True
+        
+        if self.x == globals.PLAYER.x and self.y == globals.PLAYER.y:
+            globals.PLAYER.death()
             
 
     def setDir(self, dir):
