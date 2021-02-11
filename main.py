@@ -6,16 +6,17 @@ from pygame.locals import*
 from globals import *
 import level
 import mobs
+import save as s
 import hud
 import sprites
 sprites.load()
 import player
+import scenario
+import dialogue
 from player import *
 import fonts
-import score
-import save as s
-import pygame_menu
-
+import score 
+import dialogue
 pygame.init()
 pygame.display.set_caption("Organic Future");
 clock = pygame.time.Clock()
@@ -56,9 +57,14 @@ def main():
     fonts.font_init()
     while run:
         globals.LT = clock.tick(60)
+        
         if globals.LVL_CHANGED:
             load_lvl(globals.NUM_LVL)
+        
         globals.WIN.fill(colors.GREY) # background
+       
+        scenario.lvl1()
+       
         level.show(globals.MAP) # tiles
         for m in mobs.mobs:
             m.drawMob()
@@ -70,8 +76,12 @@ def main():
         hud.draw_bar(globals.PLAYER.energie)
         hud.draw_lvl()
         hud.draw_deaths()
+        
+       
+        
         pygame.display.flip() # show
 
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
