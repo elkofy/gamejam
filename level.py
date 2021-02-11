@@ -4,6 +4,7 @@ import globals
 import pygame
 import tile
 import mobs
+import sprites
 
 chars = tile.chars
 
@@ -45,7 +46,10 @@ def toTileMap(lvl = globals.MAP):
     for y in range(len(lvl)):
         map.append([])
         for x in range(len(lvl[y])):
-            map[y].append(getTile(lvl[y][x], x, y))
+            if len(lvl[y][x]) == 1:
+                map[y].append(getTile(lvl[y][x], x, y))
+            else:
+                map[y].append(getTile(lvl[y][x][0], x, y, lvl[y][x][1]))
 
     return map
 
@@ -75,10 +79,10 @@ def show(map = globals.MAP):
 def cli(lvl = globals.LVL):
     for line in lvl:
         for case in line:
-            print(case + " ", end="")
+            print(case[0] + " ", end="")
         print("\n", end="")
 
-def getTile(c, x, y):
+def getTile(c, x, y, d = None):
     if (chars[c] == "empty"):
         return tile.Empty(x, y)
     elif (chars[c] == "spawn"):
@@ -91,13 +95,17 @@ def getTile(c, x, y):
         if globals.Jour :
             return tile.Fruits(x, y, "tomato", 6)
         else:
-            return mobs.Mob(x, y, "tomato", 1)
+            return mobs.Mob(x, y, "tomato", d, 54)
     elif (chars[c] == "kiwi"):
         if globals.Jour :
             return tile.Fruits(x, y, "kiwi", 7)
         else:
-            return mobs.Mob(x, y, "kiwi", 1)
-
+            return mobs.Mob(x, y, "kiwi", d, (41 if d == "l" or d == "r" else 44))
+    elif (chars[c] == "lemon"):
+        if globals.Jour :
+            return tile.Fruits(x, y, "lemon", 1)
+        else:
+            return mobs.Mob(x, y, "lemon", d, 8)
     elif (chars[c] == "trap"):
         return tile.Trap(x, y)
     

@@ -10,6 +10,7 @@ chars = {
     "@" : "wall",
     "t" : "tomato",
     "k" : "kiwi",
+    "l" : "lemon",
     "p" : "trap"
 }
 
@@ -57,10 +58,10 @@ class Wall(Tile):
         
         self.full = sl["wall_0"].copy()
 
-        top = y == 0 or chars[globals.LVL[y-1][x]] != "wall"
-        left = x == 0 or chars[globals.LVL[y][x-1]] != "wall"
-        right = x == len(globals.LVL[y])-1 or chars[globals.LVL[y][x+1]] != "wall"
-        bottom = y == len(globals.LVL)-1 or chars[globals.LVL[y+1][x]] != "wall"
+        top = y == 0 or chars[globals.LVL[y-1][x][0]] != "wall"
+        left = x == 0 or chars[globals.LVL[y][x-1][0]] != "wall"
+        right = x == len(globals.LVL[y])-1 or chars[globals.LVL[y][x+1][0]] != "wall"
+        bottom = y == len(globals.LVL)-1 or chars[globals.LVL[y+1][x][0]] != "wall"
 
         self.full.blit((sl["wall_1"] if top else sl["wall_2"]), (0, 0))
         self.full.blit((sl["wall_3"] if left else sl["wall_4"]), (0, 0))
@@ -76,7 +77,7 @@ class Wall(Tile):
         elif (not top and left):
             self.full.blit(sl["wall_18"], (0, 0))
         else:
-            self.full.blit((sl["wall_10"] if chars[globals.LVL[y-1][x-1]] == "wall" else sl["wall_25"]), (0, 0))
+            self.full.blit((sl["wall_10"] if chars[globals.LVL[y-1][x-1][0]] == "wall" else sl["wall_25"]), (0, 0))
 
         #top rightt
         if (top and right):
@@ -86,7 +87,7 @@ class Wall(Tile):
         elif (not top and right):
             self.full.blit(sl["wall_20"], (0, 0))
         else:
-            self.full.blit((sl["wall_12"] if chars[globals.LVL[y-1][x+1]] == "wall" else sl["wall_26"]), (0, 0))
+            self.full.blit((sl["wall_12"] if chars[globals.LVL[y-1][x+1][0]] == "wall" else sl["wall_26"]), (0, 0))
 
         #bottom left
         if (bottom and left):
@@ -96,7 +97,7 @@ class Wall(Tile):
         elif (not bottom and left):
             self.full.blit(sl["wall_22"], (0, 0))
         else:
-            self.full.blit((sl["wall_14"] if chars[globals.LVL[y+1][x-1]] == "wall" else sl["wall_27"]), (0, 0))
+            self.full.blit((sl["wall_14"] if chars[globals.LVL[y+1][x-1][0]] == "wall" else sl["wall_27"]), (0, 0))
 
         #bottom right
         if (bottom and right):
@@ -106,7 +107,7 @@ class Wall(Tile):
         elif (not bottom and right):
             self.full.blit(sl["wall_24"], (0, 0))
         else:
-            self.full.blit((sl["wall_16"] if chars[globals.LVL[y+1][x+1]] == "wall" else sl["wall_28"]), (0, 0))
+            self.full.blit((sl["wall_16"] if chars[globals.LVL[y+1][x+1][0]] == "wall" else sl["wall_28"]), (0, 0))
 
     def draw(self):
         Tile.draw(self)
@@ -145,9 +146,11 @@ class Bed(Tile):
 class Trap(Tile):
     state = True
     animTime = 0
-    
+    sound = None
     def __init__(self, x, y):
         Tile.__init__(self, x, y)
+        self.sound = self.step_sound = pygame.mixer.Sound("assets/sounds/buzz.wav")
+        self.sound.set_volume(0.015)
 
     def draw(self):
         Tile.draw(self)
@@ -155,12 +158,15 @@ class Trap(Tile):
         if self.animTime >= 1000:
             self.animTime = 0
             self.state = not self.state
+            if self.state:
+                self.sound.play()
         if self.state:
             globals.WIN.blit(sl["trap_on"], self.rect)
             if globals.PLAYER.x == self.x and globals.PLAYER.y == self.y:
                 globals.PLAYER.death()
         else:
             globals.WIN.blit(sl["trap_off"], self.rect)
+    
         
         
 

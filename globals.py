@@ -17,7 +17,7 @@ MAX_ENERGY = 25
 Jour = True
 BLIND_RADIUS = 200
 NOCLIP = True
-LOGS = False
+LOGS = True
 NUM_LVL = 1
 LVL_CHANGED = False
 MAX_LEVEL = 2
@@ -28,6 +28,7 @@ LT = None
 ### Animation Time (in ms)
 TIME_WALK = 200
 TIME_FRUITS = 800
+TIME_MONSTER = 2000
 
 #pixel_font = pygame.font.Font("assets/pixel_font.ttf", 26)
 

@@ -15,16 +15,16 @@ import scenario
 import dialogue
 from player import *
 import fonts
+import pygame_menu
 import score 
 import dialogue
+import fade
+
 pygame.init()
 pygame.display.set_caption("Organic Future");
+pygame.display.set_icon(sprites.sl['pl_d_s'])
 clock = pygame.time.Clock()
 pygame.font.init()
-player = Player()
-globals.PLAYER = player
-globals.SCORE = score.Score(globals.NAME)
-
 
 halfWidth = globals.WIDTH / 2
 haldHeight = globals.HEIGHT / 2
@@ -46,19 +46,34 @@ blindPoints = [
     (0, globals.HEIGHT),
 ]
 
+
+iconIT = 0
+
+def gameIcon():
+    global iconIT
+    iconIT = iconIT % (7 if globals.Jour else 44)
+    pygame.display.set_icon(sprites.sl[("f_kiwi_" if globals.Jour else "icon_") + str(iconIT)])
+    iconIT += 1
 def main():
+    pygame.mixer.music.load('assets/sounds/theme_1.wav')
+    pygame.mixer.music.set_volume(0.03)
+    pygame.mixer.music.play(-1)
+    player = Player()
+    globals.PLAYER = player
     globals.NAME = globals.NAME.get_value()
+    globals.SCORE = score.Score(globals.NAME)
     save = s.Save()
     globals.NB_MORTS = globals.SCORE.get()
+    print("NB_morts", globals.NB_MORTS)
     globals.NUM_LVL = save.get_lvl(globals.NAME)
     lvl = globals.NUM_LVL
     run = True
     load_lvl(lvl)
     fonts.font_init()
-    blindFilter = pygame.Rect(0, 0, globals.WIDTH, globals.HEIGHT)
     while run:
         globals.LT = clock.tick(60)
-        
+        gameIcon()
+
         if globals.LVL_CHANGED:
             load_lvl(globals.NUM_LVL)
         
@@ -67,9 +82,12 @@ def main():
         scenario.lvl1()
        
         level.show(globals.MAP) # tiles
+        for m in mobs.mobs:
+            m.drawMob()
         globals.PLAYER.draw() # player
-        if not globals.Jour: # day
-            #globals.WIN.blit(sprites.sl["blind"], blindFilter)
+        if globals.Jour: # day
+            hud.draw_bar(globals.PLAYER.energie)
+        else:# night
             pygame.draw.polygon(globals.WIN, colors.BLACK, blindPoints)
         hud.draw_bar(globals.PLAYER.energie)
         hud.draw_lvl()
@@ -85,9 +103,13 @@ def main():
                 run = False
                 globals.SCORE.add(globals.NB_MORTS)
                 save.add(globals.NAME, globals.NUM_LVL)
-        player.move()
-        for i in mobs.mobs:
-            i.move()
+        if not player.moving:
+            player.move()
+        else:
+            player.moveAnim()
+        player.checkState()
+        for m in mobs.mobs:
+            m.act()
 
     pygame.quit()
 
@@ -100,7 +122,8 @@ def load_lvl(num_lvl):
     spawnX = spawnTile.x
     spawnY = spawnTile.y
     globals.changeView(spawnX, spawnY)
-    player.load(spawnX, spawnY)
+    globals.PLAYER.load(spawnX, spawnY)
     globals.LVL_CHANGED = False
     if globals.LOGS:
         level.cli(globals.LVL)
+    fade.fade()
