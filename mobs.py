@@ -29,9 +29,9 @@ class Mob(tile.Tile):
         self.walkRect = self.rect.copy()
         mobs.append(self)
         self.walking_sound = pygame.mixer.Sound("assets/sounds/mob1.wav")
-        self.walking_sound.set_volume(0.05)
+        self.walking_sound.set_volume(0.1)
         self.death_sound = pygame.mixer.Sound("assets/sounds/mob2.wav")
-        self.death_sound.set_volume(0.05)
+        self.death_sound.set_volume(0.1)
 
     def setDir(self, dir):
         self.dir = dir
@@ -87,6 +87,7 @@ class Mob(tile.Tile):
             else:
                 if self.isPlayerVisible():
                     self.walking = True
+                    self.walking_sound.play()
                     
     def isPlayerVisible(self):
         x = self.x + self.dirX
@@ -102,5 +103,6 @@ class Mob(tile.Tile):
         return False
         
     def death(self):
+        self.death_sound.play()
         mobs.remove(self)
         self = tile.Tile(self.x, self.y)
