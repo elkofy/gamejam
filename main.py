@@ -18,12 +18,34 @@ pygame.font.init()
 player = Player()
 globals.PLAYER = player
 
+
+halfWidth = globals.WIDTH / 2
+haldHeight = globals.HEIGHT / 2
+blindPoints = [
+    (0, 0),
+    (halfWidth, 0),
+    (halfWidth, haldHeight - BLIND_RADIUS),
+    (halfWidth - BLIND_RADIUS/4*3, haldHeight - BLIND_RADIUS/4*3),
+    (halfWidth - BLIND_RADIUS, haldHeight),
+    (halfWidth - BLIND_RADIUS/4*3, haldHeight + BLIND_RADIUS/4*3),
+    (halfWidth, haldHeight + BLIND_RADIUS),
+    (halfWidth + BLIND_RADIUS/4*3, haldHeight + BLIND_RADIUS/4*3),
+    (halfWidth + BLIND_RADIUS, haldHeight),
+    (halfWidth + BLIND_RADIUS/4*3, haldHeight - BLIND_RADIUS/4*3),
+    (halfWidth, haldHeight - BLIND_RADIUS),
+    (halfWidth, 0),
+    (globals.WIDTH, 0),
+    (globals.WIDTH, globals.HEIGHT),
+    (0, globals.HEIGHT),
+]
+
 def main():
     lvl = globals.NUM_LVL
     run = True
     load_lvl(lvl)
+    blindFilter = pygame.Rect(0, 0, globals.WIDTH, globals.HEIGHT)
     while run:
-        clock.tick(30)
+        globals.LT = clock.tick(60)
         if globals.LVL_CHANGED:
             load_lvl(globals.NUM_LVL)
         globals.WIN.fill(colors.GREY) # background
@@ -32,8 +54,8 @@ def main():
         if globals.Jour: # day
             energy_bar.draw_bar(globals.PLAYER.energie)
         else:# night 
-            rect = pygame.Rect(0, 0, globals.WIDTH, globals.HEIGHT)
-            globals.WIN.blit(sprites.sl["blind"], rect)
+            #globals.WIN.blit(sprites.sl["blind"], blindFilter)
+            pygame.draw.polygon(globals.WIN, colors.BLACK, blindPoints)
         pygame.display.flip() # show
 
         for event in pygame.event.get():
@@ -57,4 +79,5 @@ def load_lvl(num_lvl):
     globals.changeView(spawnX, spawnY)
     player.load(spawnX, spawnY)
     globals.LVL_CHANGED = False
-
+    if globals.LOGS:
+        level.cli(globals.LVL)
