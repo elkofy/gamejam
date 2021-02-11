@@ -1,7 +1,7 @@
 WIDTH = 1024
 HEIGHT = 768
 GAME_WIDTH = 30
-GAME_HEIGHT = GAME_WIDTH
+GAME_HEIGHT = 30
 OBJECT_WIDTH = 64
 OBJECT_HEIGHT = OBJECT_WIDTH
 PLAYER_SCALE = 0.85
@@ -15,13 +15,20 @@ MAP = None
 PLAYER = None
 MAX_ENERGY = 25
 Jour = True
-NOCLIP = False
+BLIND_RADIUS = 200
+NOCLIP = True
+LOGS = True
 NUM_LVL = 1
 LVL_CHANGED = False
 MAX_LEVEL = 2
 NAME = "Kids"
 NB_MORTS = 0
 SCORE = {}
+LT = None
+### Animation Time (in ms)
+TIME_WALK = 200
+TIME_FRUITS = 1400
+
 #pixel_font = pygame.font.Font("assets/pixel_font.ttf", 26)
 
 def calcX(x):
@@ -50,8 +57,8 @@ def changeView(x, y):
 
 def changeViewX(x):
     global marginLeft
-    marginLeft += x
+    marginLeft = x
 
 def changeViewY(y):
     global marginTop
-    marginTop += y
+    marginTop = y

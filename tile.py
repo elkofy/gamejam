@@ -1,5 +1,6 @@
 import pygame
 import globals
+import random
 from sprites import sl
 
 chars = {
@@ -27,6 +28,24 @@ class Tile:
 
     def draw(self):
         globals.WIN.blit(sl['bg_tile'], self.rect)
+
+class Empty(Tile):
+    def __init__(self, x, y):
+        Tile.__init__(self, x, y)
+        self.light = False
+        self.vine = False
+        dice = random.randint(0, 100)
+        if dice <= 6:
+            self.light = True
+        elif dice <= 12:
+            self.vine = True
+    
+    def draw(self):
+        Tile.draw(self)
+        if self.light:
+            globals.WIN.blit(sl['light_' + ("day" if globals.Jour else "night")], self.rect)
+        elif self.vine:
+            globals.WIN.blit(sl["vine"], self.rect)
 
 class Wall(Tile):
 
@@ -58,7 +77,7 @@ class Wall(Tile):
         else:
             self.full.blit((sl["wall_10"] if chars[globals.LVL[y-1][x-1]] == "wall" else sl["wall_25"]), (0, 0))
 
-        #top right
+        #top rightt
         if (top and right):
             self.full.blit(sl["wall_11"], (0, 0))
         elif (top and not right):
@@ -101,13 +120,18 @@ class Spawn(Tile):
 
 class Fruits(Tile):
     
-    def __init__(self, x, y, sort):
+    def __init__(self, x, y, sort, nbS):
         Tile.__init__(self, x, y)
         self.sort = sort
+        self.animTime = 0
+        self.nbSprite = nbS
 
     def draw(self):
+        self.animTime += globals.LT
+        if self.animTime >= globals.TIME_FRUITS:
+            self.animTime = 0
         Tile.draw(self)
-        globals.WIN.blit(sl["f_" + self.sort], self.rect)
+        globals.WIN.blit(sl["f_" + self.sort + "_" + str(int(self.animTime / globals.TIME_FRUITS * self.nbSprite))], self.rect)
 
 class Bed(Tile):
     def __init__(self, x, y):
