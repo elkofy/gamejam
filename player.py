@@ -74,33 +74,59 @@ class Player:
         
         globals.WIN.blit(self.img, self.rect)
     
-    def moveAnim(self, dirr):
+    def checkState(self):
+        if type(globals.MAP[self.y][self.x]) is tile.Fruits:
+            self.energie += 10
+            globals.MAP[self.y][self.x] = tile.Tile(self.x, self.y)
+        if type(globals.MAP[self.y][self.x]) is tile.Bed:
+            print(globals.Jour)
+            if not globals.Jour:
+                if globals.NUM_LVL < globals.MAX_LEVEL:
+                    globals.Jour = True
+                    globals.LVL_CHANGED = True
+                    globals.NUM_LVL += 1
+                else:
+                    gameover.end_screen()
+            else:
+                globals.Jour = False
+                globals.LVL_CHANGED = True
+
+            self.energie = MAX_ENERGY
+        
+        if type(globals.MAP[self.y][self.x]) is tile.Trap:
+            if globals.MAP[self.y][self.x].state:
+                self.death()
+
+        if globals.Jour and self.energie <= 0:
+            self.death()
+
+    def moveAnim(self):
         self.animTime += globals.LT
 
         if self.animTime >= globals.TIME_WALK:
             self.moving = False
             self.animTime = 0
-            if dirr == "u":
+            if self.dirr == "u":
                     self.y -= 1
-            elif dirr == "l":
+            elif self.dirr == "l":
                     self.x -= 1
-            elif dirr == "r":
+            elif self.dirr == "r":
                     self.x += 1
-            elif dirr == "d":
+            elif self.dirr == "d":
                     self.y += 1
-            self.img = sprites.sl["pl_" + dirr + "_s"]
+            self.img = sprites.sl["pl_" + self.dirr + "_s"]
             globals.changeView(self.x, self.y)
         else:
-            if dirr == "u":
+            if self.dirr == "u":
                 globals.changeViewY(calcX(self.y) - (HEIGHT / 2) + OBJECT_HEIGHT / 2 - (self.animTime/globals.TIME_WALK * OBJECT_HEIGHT))
-            elif dirr == "l":
+            elif self.dirr == "l":
                 globals.changeViewX(calcX(self.x) - (WIDTH / 2) + OBJECT_WIDTH / 2 - (self.animTime/globals.TIME_WALK * OBJECT_WIDTH))
-            elif dirr == "r":
+            elif self.dirr == "r":
                 globals.changeViewX(calcX(self.x) - (WIDTH / 2) + OBJECT_WIDTH / 2 + (self.animTime/globals.TIME_WALK * OBJECT_WIDTH))
-            elif dirr == "d":
+            elif self.dirr == "d":
                 globals.changeViewY(calcX(self.y) - (HEIGHT / 2) + OBJECT_HEIGHT / 2 + (self.animTime/globals.TIME_WALK * OBJECT_HEIGHT))
 
-            self.img = sprites.sl["pl_" + dirr + "_m_" + str(int((self.animTime/globals.TIME_WALK) * NB_SPRITE))]
+            self.img = sprites.sl["pl_" + self.dirr + "_m_" + str(int((self.animTime/globals.TIME_WALK) * NB_SPRITE))]
 
     def move(self):
         keys=pygame.key.get_pressed()
@@ -108,67 +134,37 @@ class Player:
         oldX = self.x
         oldY = self.y
 
-        if not self.moving:
-            if keys[K_z] or keys[K_UP]:
-                if (globals.NOCLIP and self.y > 0) or not isWall(self.x, self.y -1):
-                    self.moving = True
-                    self.dirr = "u"
-                    self.energie -= 1
-                self.img = sprites.sl["pl_u_s"]
-                self.step_sound.play()
-            elif keys[K_s] or keys[K_DOWN]:
-                if(globals.NOCLIP and self.y < len(globals.LVL) - 1) or not isWall(self.x, self.y +1):
-                    self.moving = True
-                    self.dirr = "d"
-                    self.moving = True
-                    self.energie -= 1
-                self.img = sprites.sl["pl_d_s"]
-                self.step_sound.play()
-            elif keys[K_q] or keys[K_LEFT]:
-                if (globals.NOCLIP and self.x > 0) or not isWall(self.x -1, self.y):
-                    self.moving = True
-                    self.dirr = "l"
-                    self.moving = True
-                    self.energie -= 1
-                self.img = sprites.sl["pl_l_s"]
-                self.step_sound.play()
-            elif keys[K_d] or keys[K_RIGHT]:
-                if (globals.NOCLIP and self.x < len(globals.LVL[self.y]) - 1) or not isWall(self.x + 1, self.y):
-                    self.moving = True
-                    self.dirr = "r"
-                    self.moving = True
-                    self.energie -= 1
-                self.img = sprites.sl["pl_r_s"]
-                self.step_sound.play()
-        else:
-            self.moveAnim(self.dirr)
-
-        if self.x != oldX or self.y != oldY:
-            if type(globals.MAP[self.y][self.x]) is tile.Fruits:
-                self.energie += 10
-                globals.MAP[self.y][self.x] = tile.Tile(self.x, self.y)
-            if type(globals.MAP[self.y][self.x]) is tile.Bed:
-                print(globals.Jour)
-                if not globals.Jour:
-                    if globals.NUM_LVL < globals.MAX_LEVEL:
-                        globals.Jour = True
-                        globals.LVL_CHANGED = True
-                        globals.NUM_LVL += 1
-                    else:
-                        gameover.end_screen()
-                else:
-                    globals.Jour = False
-                    globals.LVL_CHANGED = True
-
-                self.energie = MAX_ENERGY
-            if type(globals.MAP[self.y][self.x]) is tile.Trap:
-                if globals.MAP[self.y][self.x].state:
-                    self.death()
-
-        
-        if globals.Jour and self.energie <= 0:
-            self.death()
-    
+        if keys[K_z] or keys[K_UP]:
+            if (globals.NOCLIP and self.y > 0) or not isWall(self.x, self.y -1):
+                self.moving = True
+                self.dirr = "u"
+                self.energie -= 1
+            self.img = sprites.sl["pl_u_s"]
+            self.step_sound.play()
+        elif keys[K_s] or keys[K_DOWN]:
+            if(globals.NOCLIP and self.y < len(globals.LVL) - 1) or not isWall(self.x, self.y +1):
+                self.moving = True
+                self.dirr = "d"
+                self.moving = True
+                self.energie -= 1
+            self.img = sprites.sl["pl_d_s"]
+            self.step_sound.play()
+        elif keys[K_q] or keys[K_LEFT]:
+            if (globals.NOCLIP and self.x > 0) or not isWall(self.x -1, self.y):
+                self.moving = True
+                self.dirr = "l"
+                self.moving = True
+                self.energie -= 1
+            self.img = sprites.sl["pl_l_s"]
+            self.step_sound.play()
+        elif keys[K_d] or keys[K_RIGHT]:
+            if (globals.NOCLIP and self.x < len(globals.LVL[self.y]) - 1) or not isWall(self.x + 1, self.y):
+                self.moving = True
+                self.dirr = "r"
+                self.moving = True
+                self.energie -= 1
+            self.img = sprites.sl["pl_r_s"]
+            self.step_sound.play()
 
     def death(self):
         globals.NB_MORTS += 1

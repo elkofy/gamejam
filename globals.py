@@ -27,7 +27,8 @@ SCORE = {}
 LT = None
 ### Animation Time (in ms)
 TIME_WALK = 200
-TIME_FRUITS = 1400
+TIME_FRUITS = 800
+TIME_MONSTER = 1000
 
 #pixel_font = pygame.font.Font("assets/pixel_font.ttf", 26)
 

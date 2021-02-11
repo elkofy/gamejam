@@ -1,14 +1,14 @@
 import pygame
 import globals
 
+c = 0
+
 sl = {}
 
 toLoad = {
     "bg_tile" : "decors/sol.png",
     "spawn" : "start.png",
     "bed" : "bed.png",
-    "m_tomato" : "mobs/tomato.gif",
-    "m_kiwi" : "mobs/kiwi.gif",
     "light_day" : "decors/light_day.png",
     "light_night" : "decors/light_night.png",
     "vine" : "decors/vine.png",
@@ -17,6 +17,8 @@ toLoad = {
 }
 
 def loadSprite(name, f, w = globals.OBJECT_WIDTH, h = globals.OBJECT_HEIGHT):
+    global c
+    c += 1
     global sprites
     
     if globals.LOGS:
@@ -58,12 +60,27 @@ def loadFruits():
         for i in range(fruits[f]):
             loadSprite("f_" + f + "_" + str(i), "fruits/" + f + "/" + str(i) + ".png")
 
+def loadMonsters():
+    """mobs = {
+        "kiwi" : 44,
+        "tomato" : 54
+    }"""
+
+    for i in range(54):
+        loadSprite("m_tomato_d_" + str(i), "mobs/tomato/down/" + str(i) + ".png")
+        loadSprite("m_tomato_r_" + str(i), "mobs/tomato/right/" + str(i) + ".png")
+
+    for i in range(44):
+        loadSprite("m_kiwi_d_" + str(i), "mobs/kiwi/down/" + str(i) + ".png")
+
 def load():
     loadSprite("blind", "blind.png", globals.WIDTH, globals.HEIGHT)
 
     loadWall()
     loadPlayer()
     loadFruits()
+    loadMonsters()
 
     for spr in toLoad:
         loadSprite(spr, toLoad[spr])
+    print("Total sprites :", c)
