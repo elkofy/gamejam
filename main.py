@@ -15,17 +15,15 @@ import scenario
 import dialogue
 from player import *
 import fonts
+import pygame_menu
 import score 
 import dialogue
+
 pygame.init()
 pygame.display.set_caption("Organic Future");
 pygame.display.set_icon(sprites.sl['pl_d_s'])
 clock = pygame.time.Clock()
 pygame.font.init()
-player = Player()
-globals.PLAYER = player
-globals.SCORE = score.Score(globals.NAME)
-
 
 halfWidth = globals.WIDTH / 2
 haldHeight = globals.HEIGHT / 2
@@ -56,9 +54,15 @@ def gameIcon():
     pygame.display.set_icon(sprites.sl[("f_kiwi_" if globals.Jour else "icon_") + str(iconIT)])
     iconIT += 1
 def main():
+    #pygame.mixer.music.load('assets/sounds/theme_1.wav')
+    #pygame.mixer.music.play(-1)
+    player = Player()
+    globals.PLAYER = player
     globals.NAME = globals.NAME.get_value()
+    globals.SCORE = score.Score(globals.NAME)
     save = s.Save()
     globals.NB_MORTS = globals.SCORE.get()
+    print("NB_morts", globals.NB_MORTS)
     globals.NUM_LVL = save.get_lvl(globals.NAME)
     lvl = globals.NUM_LVL
     run = True
@@ -116,7 +120,7 @@ def load_lvl(num_lvl):
     spawnX = spawnTile.x
     spawnY = spawnTile.y
     globals.changeView(spawnX, spawnY)
-    player.load(spawnX, spawnY)
+    globals.PLAYER.load(spawnX, spawnY)
     globals.LVL_CHANGED = False
     if globals.LOGS:
         level.cli(globals.LVL)

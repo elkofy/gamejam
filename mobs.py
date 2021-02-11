@@ -14,6 +14,8 @@ class Mob(tile.Tile):
     sort = None
     speed = 30
     walking = False
+    walking_sound = None
+    death_sound = None
 
     def __init__(self, x, y, sort, dir, nbS):
         global mobs
@@ -26,7 +28,10 @@ class Mob(tile.Tile):
         self.endCheck = False
         self.walkRect = self.rect.copy()
         mobs.append(self)
-        print(sort + str(globals.Jour))
+        self.walking_sound = pygame.mixer.Sound("assets/sounds/mob1.wav")
+        self.walking_sound.set_volume(0.05)
+        self.death_sound = pygame.mixer.Sound("assets/sounds/mob2.wav")
+        self.death_sound.set_volume(0.05)
 
     def setDir(self, dir):
         self.dir = dir

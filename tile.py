@@ -146,9 +146,11 @@ class Bed(Tile):
 class Trap(Tile):
     state = True
     animTime = 0
-    
+    sound = None
     def __init__(self, x, y):
         Tile.__init__(self, x, y)
+        self.sound = self.step_sound = pygame.mixer.Sound("assets/sounds/buzz.wav")
+        self.sound.set_volume(0.035)
 
     def draw(self):
         Tile.draw(self)
@@ -156,12 +158,15 @@ class Trap(Tile):
         if self.animTime >= 1000:
             self.animTime = 0
             self.state = not self.state
+            if self.state:
+                self.sound.play()
         if self.state:
             globals.WIN.blit(sl["trap_on"], self.rect)
             if globals.PLAYER.x == self.x and globals.PLAYER.y == self.y:
                 globals.PLAYER.death()
         else:
             globals.WIN.blit(sl["trap_off"], self.rect)
+    
         
         
 

@@ -11,6 +11,7 @@ import tile
 import gameover
 NB_SPRITE = 16
 
+
 class Directions(Enum):
     Up = 0
     Down = 1
@@ -27,12 +28,15 @@ class Player:
     speed = 5
     energie = MAX_ENERGY
     walking_Cpt = 0
+    step_sound = None
 
     def resetPos(self):
         self.rect.x = calcX(self.x) - globals.marginLeft + ((1 - globals.PLAYER_SCALE)/2 * globals.OBJECT_WIDTH)
         self.rect.y = calcY(self.y) - globals.marginTop + ((1 - globals.PLAYER_SCALE)/2 * globals.OBJECT_HEIGHT)
 
     def load(self, x, y):
+        self.step_sound = pygame.mixer.Sound("assets/sounds/foot.wav")
+        self.step_sound.set_volume(0.2)
         self.moving = False
         self.dirr = None
         self.animTime = 0
@@ -136,6 +140,7 @@ class Player:
                 self.dirr = "u"
                 self.energie -= 1
             self.img = sprites.sl["pl_u_s"]
+            self.step_sound.play()
         elif keys[K_s] or keys[K_DOWN]:
             if(globals.NOCLIP and self.y < len(globals.LVL) - 1) or not isWall(self.x, self.y +1):
                 self.moving = True
@@ -143,6 +148,7 @@ class Player:
                 self.moving = True
                 self.energie -= 1
             self.img = sprites.sl["pl_d_s"]
+            self.step_sound.play()
         elif keys[K_q] or keys[K_LEFT]:
             if (globals.NOCLIP and self.x > 0) or not isWall(self.x -1, self.y):
                 self.moving = True
@@ -150,6 +156,7 @@ class Player:
                 self.moving = True
                 self.energie -= 1
             self.img = sprites.sl["pl_l_s"]
+            self.step_sound.play()
         elif keys[K_d] or keys[K_RIGHT]:
             if (globals.NOCLIP and self.x < len(globals.LVL[self.y]) - 1) or not isWall(self.x + 1, self.y):
                 self.moving = True
@@ -157,6 +164,7 @@ class Player:
                 self.moving = True
                 self.energie -= 1
             self.img = sprites.sl["pl_r_s"]
+            self.step_sound.play()
 
     def death(self):
         globals.NB_MORTS += 1
