@@ -45,43 +45,56 @@ texte = [
             "Cobaye : Allo ???!!"
         ]
     ],
-    [ #LEVEL2
+    [ # LEVEL2
         [
-            "???:Splendide ! Vous avez passé la première étape, votre question?"
+            "??? : Splendide ! Vous avez passé la",
+            "première étape, votre question?"
         ],
         [
-            "cobaye : pourquoi je fais tout ça !"
+            "Cobaye : Pourquoi je fais tout ça !"
         ],
         [
-            "???: Vous êtes l’espoir de l’humanité !"
+            "??? : Vous êtes l’espoir de l’humanité !"
         ],
         [
-            "cobaye:Comment ça ? et pourquoi je mange des fruits et pourquoi il m’attaque la nuit ?"
+            "Cobaye : Comment ça ?",
+            "Et pourquoi je mange des fruits ?",
+            "Et pourquoi il m’attaque la nuit ?"
         ],
         [
-            "???: Qu’est ce que vous racontez ?!"
+            "??? : Qu’est ce que vous racontez ?!"
         ],
         [
-            "cobaye:Rien j’ai du rêver …"
+            "Cobaye : Rien j’ai du rêver ..."
         ],
         [
-            "???: Bon j’espère que ce n’est rien de grave !"
+            "??? : Bon, j’espère que ce n’est rien de grave !"
         ]
     ],
-    [#LEVEL3
+    [ # LEVEL3
         [
-            "cobaye : Dites moi qui je suis !"
+            "Cobaye : Dites moi qui je suis !"
         ],
         [
-            "???:Je vous le révèle, vous êtes le premier prototype humain qui ne consomme que des fruits et des légumes" ,
-            "vous êtes notre meilleur espoir notre élément et je suis le scientifique qui vous  a conçu .",
-            "Finissez le niveau et venez avec moi écrire une nouvelle page de l’humanité !"
+            "??? : Je vous le révèle, vous",
+            "êtes le premier prototype humain qui ne",
+            "consomme que des fruits et des légumes"
         ],
         [
-            "Cobaye :J’aimerais mieux en effet !"
+            "??? : Vous êtes notre meilleur espoir",
+            "notre élément, et je suis le scientifique",
+            "qui vous  a conçu ."
         ],
         [
-            "scientifique :Allez courage !"
+            "Scientifique : Finissez le niveau et",
+            "venez avec moi écrire une nouvelle",
+            "page de l’humanité !"
+        ],
+        [
+            "Cobaye : J’aimerais mieux en effet !"
+        ],
+        [
+            "Scientifique : Allez courage !"
         ]
     ]
 ]

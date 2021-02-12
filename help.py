@@ -15,4 +15,3 @@ def help():
     globals.WIN.blit(pygame.image.load("assets/help.png"), rect)
 
     pygame.display.flip()
- 

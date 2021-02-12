@@ -95,9 +95,9 @@ def main():
         if globals.NUM_LVL == 1:
             scenario.draw(0)
         elif globals.NUM_LVL == 2:
-            scenario.draw(0)
+            scenario.draw(1)
         elif globals.NUM_LVL == 3:
-            scenario.draw(0)
+            scenario.draw(2)
         
         pygame.display.flip() # show
 
