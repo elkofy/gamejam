@@ -12,7 +12,7 @@ def menu():
     fonts.font_init()
     menu = pygame_menu.Menu( globals.HEIGHT,globals.WIDTH, 'Organic Future',
                        theme=pygame_menu.themes.THEME_DEFAULT)
-    globals.NAME = menu.add_text_input('Nom :', default='KIDZ')
+    globals.NAME = menu.add_text_input('Nom :', default='lolo')
     menu.add_button('Jouer', main)
     menu.add_button('Credits', credits.credits)
     menu.add_button('Quitter', pygame_menu.events.EXIT)
