@@ -28,7 +28,7 @@ def credits():
     title = fonts.pixel_font_24.render("- Nassim D.", True, colors.BLACK)
     globals.WIN.blit(title, (globals.WIDTH / 2 - 150, 300))
 
-    title = fonts.pixel_font_30.render("Graphisme :", True, colors.BLACK)
+    title = fonts.pixel_font_30.render("Graphismes / Musiques :", True, colors.BLACK)
     globals.WIN.blit(title, (globals.WIDTH / 2 - 150, 450))
 
     title = fonts.pixel_font_24.render("- Nassim D.", True, colors.BLACK)
