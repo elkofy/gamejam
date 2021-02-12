@@ -3,9 +3,12 @@ import globals
 import score
 import sprites
 import leaderboard
+import save
 
 #globals.WIN = pygame.display.set_mode((globals.WIDTH, globals.HEIGHT));
 def end_screen():
+  s = save.Save()
+  s.add(globals.NAME, 1)
   globals.WIN = pygame.display.set_mode((globals.WIDTH, globals.HEIGHT))
   pygame.display.flip()
   alive= True
