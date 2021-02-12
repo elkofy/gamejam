@@ -70,8 +70,9 @@ def randomlvl():
 
 def show(map = globals.MAP):
     for y in range(len(map)):
-        if (globals.calcY(y) - globals.marginTop + globals.OBJECT_HEIGHT > 0 and globals.calcY(y) - globals.marginTop < globals.HEIGHT):
-            for x in range(len(map[y])):
+        for x in range(len(map[y])):
+            map[y][x].clock()
+            if (globals.calcY(y) - globals.marginTop + globals.OBJECT_HEIGHT > 0 and globals.calcY(y) - globals.marginTop < globals.HEIGHT):
                 if (globals.calcX(x) - globals.marginLeft + globals.OBJECT_WIDTH > 0 and globals.calcX(x) - globals.marginLeft < globals.WIDTH):
                     map[y][x].updatePos()
                     map[y][x].draw()

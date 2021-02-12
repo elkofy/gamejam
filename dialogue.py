@@ -1,55 +1,47 @@
 import pygame
 import globals
+import fonts
+import colors
 pygame.init()
 font = pygame.font.Font(None, 25)
 
+DUREE_REP = 4000
 
-def text_generator(text):
-    tmp = " "
-    for letter in text:
-        tmp += letter
-        yield tmp
+class Replique():
 
-def wipetext(text):
-     tmp = ''
-     for letter in text:
-        tmp = ' '
-        if letter != ' ':
-            yield tmp      
+    def __init__(self):
+        self.lignes = []
 
-class Dialogue(object):
+    def addLigne(self, text):
+        self.lignes.append(text)
+
+class Dialogue():
    
-    def __init__(self, font, text, pos, autoreset=False):
+    def __init__(self):
         self.done = False
-        self.font = font
-        self.text = text
-        self._gen = text_generator(self.text)
-        self.pos = pos
-        self.autoreset = autoreset
-        self.update()
+        self.repliques = []
+        self.i = 0
+        self.animTime = 0
 
-    def reset(self):
-        self._gen = text_generator(self.text)
-        self.done = False
-        self.update()
+    def addReplique(self):
+        self.repliques.append(Replique())
 
-    def len(self):
-        for letters in self.text:
-            self.update()
+    def addLigne(self, text):
+        self.repliques[len(self.repliques) - 1].addLigne(text)
 
-    def erase(self):
-        self._gen = wipetext(self.text)
-        self.done = False
+    def draw(self):
+        pygame.draw.rect(globals.WIN, colors.BLACK, pygame.Rect(0, 0.75 * globals.HEIGHT, globals.WIDTH, 0.25 * globals.HEIGHT))
 
-    
-    def update(self):
-        if not self.done:
-            try: self.rendered = self.font.render(next(self._gen), True, (0, 0, 0))
-            except StopIteration: 
+        for j in range(len(self.repliques[self.i].lignes)):
+            img = fonts.pixel_font_30.render(self.repliques[self.i].lignes[j], True, colors.WHITE)
+            globals.WIN.blit(img, ((globals.WIDTH - (img.get_size()[0]))/2,  (0.8 * globals.HEIGHT) + j * (0.05 * globals.HEIGHT)))
+
+            0.8 * globals.HEIGHT
+
+        self.animTime += globals.LT
+        if self.animTime >= DUREE_REP:
+            self.animTime = 0
+            self.i += 1
+            if self.i > len(self.repliques) - 1:
                 self.done = True
-                if self.autoreset: self.reset()
-
-    def draw(self, screen):
-        screen.blit(self.rendered, self.pos)
-
-
+        

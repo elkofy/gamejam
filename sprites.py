@@ -18,7 +18,7 @@ toLoad = {
     "bed" : "bed.png",
     "light_day" : "decors/light_day.png",
     "light_night" : "decors/light_night.png",
-    "vine" : "decors/vine.png",
+    "grating" : "decors/grating.png",
     "trap_on": "trap/on.png",
     "trap_off": "trap/off.png"
 }

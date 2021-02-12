@@ -79,7 +79,6 @@ def main():
         
         globals.WIN.fill(colors.GREY) # background
        
-        scenario.lvl1()
        
         level.show(globals.MAP) # tiles
         for m in mobs.mobs:
@@ -92,8 +91,8 @@ def main():
         hud.draw_bar(globals.PLAYER.energie)
         hud.draw_lvl()
         hud.draw_deaths()
-        
-       
+
+        scenario.draw(0)
         
         pygame.display.flip() # show
 
