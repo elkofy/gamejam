@@ -47,7 +47,7 @@ class Player:
         self.zz_sound.set_volume(0.2)
         self.zz_sound = pygame.mixer.Sound("assets/sounds/snork.wav")
         self.zz_sound.set_volume(0.2)
-        self.zz_sound.play()
+        #self.zz_sound.play()
         self.moving = False
         self.dirr = None
         self.animTime = 0
