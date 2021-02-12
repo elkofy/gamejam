@@ -87,7 +87,7 @@ class Player:
     
     def checkState(self):
         if type(globals.MAP[self.y][self.x]) is tile.Fruits:
-            self.energie += 10
+            self.energie += 20
             self.eat_sound.play()
             globals.MAP[self.y][self.x] = tile.Tile(self.x, self.y)
         if type(globals.MAP[self.y][self.x]) is tile.Bed:
