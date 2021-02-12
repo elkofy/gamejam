@@ -137,3 +137,4 @@ def load_lvl(num_lvl):
     globals.LVL_CHANGED = False
     if globals.LOGS:
         level.cli(globals.LVL)
+    fade.fade()
