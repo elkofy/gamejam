@@ -10,7 +10,8 @@ def show_leaderboard():
     cpt = 1
     title = fonts.pixel_font_title.render("Classement", True, colors.BLACK)
     globals.WIN.blit(title, (globals.WIDTH / 2 - 150, 50))
-    print(score)
+    if globals.LOGS:
+        print(score)
     for i in score:
         if cpt > 5:
             break

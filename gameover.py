@@ -13,7 +13,8 @@ def end_screen():
   pygame.display.flip()
   alive= True
   globals.SCORE.add(globals.NB_MORTS)
-  print(globals.SCORE.score)
+  if globals.LOGS:              
+    print(globals.SCORE.score)
   while alive:
     
     for event in pygame.event.get():

@@ -16,12 +16,12 @@ PLAYER = None
 MAX_ENERGY = 25
 Jour = True
 BLIND_RADIUS = 200
-NOCLIP = True
-LOGS = True
+NOCLIP = False
+LOGS = False
 NUM_LVL = 1
 LVL_CHANGED = False
 MAX_LEVEL = 3
-NAME = "Kids"
+NAME = "Player"
 NB_MORTS = 0
 SCORE = {}
 LT = None
@@ -45,7 +45,7 @@ def calcPxY(y):
     return round(y / OBJECT_HEIGHT)
 
 def isWall(x, y):
-    if x < 0 or x > GAME_WIDTH - 1 or y < 0 or y > GAME_HEIGHT - 1 or LVL[y][x] == "@":
+    if x < 0 or x > GAME_WIDTH - 1 or y < 0 or y > GAME_HEIGHT - 1 or LVL[y][x] == "@ ":
         return True
     else:
         return False

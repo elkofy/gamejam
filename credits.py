@@ -29,14 +29,22 @@ def credits():
     globals.WIN.blit(title, (globals.WIDTH / 2 - 150, 300))
 
     title = fonts.pixel_font_30.render("Graphisme :", True, colors.BLACK)
-    globals.WIN.blit(title, (globals.WIDTH / 2 - 150, 450))
+    globals.WIN.blit(title, (globals.WIDTH / 2 - 150, 400))
 
     title = fonts.pixel_font_24.render("- Nassim D.", True, colors.BLACK)
-    globals.WIN.blit(title, (globals.WIDTH / 2 - 150, 500))
+    globals.WIN.blit(title, (globals.WIDTH / 2 - 150, 450))
 
     title = fonts.pixel_font_24.render("- Thomas V.", True, colors.BLACK)
-    globals.WIN.blit(title, (globals.WIDTH / 2 - 150, 550))
+    globals.WIN.blit(title, (globals.WIDTH / 2 - 150, 500))
 
+    title = fonts.pixel_font_30.render("Audio :", True, colors.BLACK)
+    globals.WIN.blit(title, (globals.WIDTH / 2 - 150, 600))
+
+    title = fonts.pixel_font_24.render("- Clément G.", True, colors.BLACK)
+    globals.WIN.blit(title, (globals.WIDTH / 2 - 150, 650))
+
+    title = fonts.pixel_font_24.render("- Thomas V.", True, colors.BLACK)
+    globals.WIN.blit(title, (globals.WIDTH / 2 - 150, 700))
 
 
     

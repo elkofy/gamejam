@@ -1,6 +1,8 @@
 import pygame
 import globals
 globals.WIN = pygame.display.set_mode((globals.WIDTH, globals.HEIGHT));
+globals.WIN.blit(pygame.image.load("assets/loading.png"), pygame.Rect(0, 0, globals.WIDTH, globals.HEIGHT))
+pygame.display.flip()
 import colors
 from pygame.locals import*
 from globals import *
@@ -54,17 +56,16 @@ def gameIcon():
     iconIT = iconIT % (7 if globals.Jour else 44)
     pygame.display.set_icon(sprites.sl[("f_kiwi_" if globals.Jour else "icon_") + str(iconIT)])
     iconIT += 1
+
 def main():
-    pygame.mixer.music.load('assets/sounds/theme_2.mp3')
-    pygame.mixer.music.set_volume(0.03)
-    pygame.mixer.music.play(-1)
     player = Player()
     globals.PLAYER = player
     globals.NAME = globals.NAME.get_value()
     globals.SCORE = score.Score(globals.NAME)
     save = s.Save()
     globals.NB_MORTS = globals.SCORE.get()
-    print("NB_morts", globals.NB_MORTS)
+    if globals.LOGS:
+        print("NB_morts", globals.NB_MORTS)
     globals.NUM_LVL = save.get_lvl(globals.NAME)
     lvl = globals.NUM_LVL
     run = True
@@ -79,7 +80,6 @@ def main():
         
         globals.WIN.fill(colors.GREY) # background
        
-       
         level.show(globals.MAP) # tiles
         for m in mobs.mobs:
             m.drawMob()
@@ -92,7 +92,12 @@ def main():
         hud.draw_lvl()
         hud.draw_deaths()
 
-        scenario.draw(0)
+        if globals.NUM_LVL == 1:
+            scenario.draw(0)
+        elif globals.NUM_LVL == 2:
+            scenario.draw(0)
+        elif globals.NUM_LVL == 3:
+            scenario.draw(0)
         
         pygame.display.flip() # show
 
@@ -114,6 +119,12 @@ def main():
 
 
 def load_lvl(num_lvl):
+    if (globals.Jour):
+        pygame.mixer.music.load('assets/sounds/theme_day.mp3')
+    else:
+        pygame.mixer.music.load('assets/sounds/theme_night.mp3')
+    pygame.mixer.music.play(-1)
+    pygame.mixer.music.set_volume(0.03)
     mobs.mobs = []
     globals.LVL = level.load(num_lvl)
     globals.MAP = level.toTileMap(globals.LVL)
@@ -121,8 +132,8 @@ def load_lvl(num_lvl):
     spawnX = spawnTile.x
     spawnY = spawnTile.y
     globals.changeView(spawnX, spawnY)
+    fade.fade()
     globals.PLAYER.load(spawnX, spawnY)
     globals.LVL_CHANGED = False
     if globals.LOGS:
         level.cli(globals.LVL)
-    fade.fade()

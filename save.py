@@ -10,7 +10,8 @@ class Save:
         data = f.read()
         #print("JE SUIS ICICICICICICI")
         self.levels = json.loads(data)
-        print(self.levels)
+        if globals.LOGS:
+            print(self.levels)
 
     def get_lvl(self, name):
         if not name in self.levels:
@@ -20,7 +21,8 @@ class Save:
         
     def add(self, name, level):
         self.levels[globals.NAME] = globals.NUM_LVL
-        print(self.levels)
+        if globals.LOGS:
+            print(self.levels)
         f = open("save.json", "w")
         f.write(json.dumps(self.levels))
 

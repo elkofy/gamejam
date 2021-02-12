@@ -91,7 +91,8 @@ class Player:
             self.eat_sound.play()
             globals.MAP[self.y][self.x] = tile.Tile(self.x, self.y)
         if type(globals.MAP[self.y][self.x]) is tile.Bed:
-            print(globals.Jour)
+            if globals.LOGS:
+                print(globals.Jour)
             self.zz_sound.play()
             if not globals.Jour:
                 if globals.NUM_LVL < globals.MAX_LEVEL:
@@ -155,7 +156,7 @@ class Player:
             self.img = sprites.sl["pl_u_s"]
             self.step_sound.play()
         elif keys[K_s] or keys[K_DOWN]:
-            if(globals.NOCLIP and self.y < len(globals.LVL) - 1) or not isWall(self.x, self.y +1):
+            if (globals.NOCLIP and self.y < len(globals.LVL) - 1) or not isWall(self.x, self.y +1):
                 self.moving = True
                 self.dirr = "d"
                 self.moving = True

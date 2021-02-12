@@ -104,4 +104,4 @@ def load():
 
     for spr in toLoad:
         loadSprite(spr, toLoad[spr])
-    print("Total sprites :", c)
+    print(c, "sprites loaded")
