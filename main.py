@@ -55,7 +55,7 @@ def gameIcon():
     pygame.display.set_icon(sprites.sl[("f_kiwi_" if globals.Jour else "icon_") + str(iconIT)])
     iconIT += 1
 def main():
-    pygame.mixer.music.load('assets/sounds/theme_1.wav')
+    pygame.mixer.music.load('assets/sounds/musiquejour.mp3')
     pygame.mixer.music.set_volume(0.03)
     pygame.mixer.music.play(-1)
     player = Player()
