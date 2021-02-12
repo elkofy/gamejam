@@ -30,13 +30,6 @@ class Dialogue():
         self.repliques[len(self.repliques) - 1].addLigne(text)
 
     def draw(self):
-        self.animTime += globals.LT
-        if self.animTime >= DUREE_REP:
-            self.animTime = 0
-            self.i += 1
-            if self.i > len(self.repliques) - 1:
-                self.done = True
-        
         pygame.draw.rect(globals.WIN, colors.BLACK, pygame.Rect(0, 0.75 * globals.HEIGHT, globals.WIDTH, 0.25 * globals.HEIGHT))
 
         for j in range(len(self.repliques[self.i].lignes)):
@@ -44,3 +37,11 @@ class Dialogue():
             globals.WIN.blit(img, ((globals.WIDTH - (img.get_size()[0]))/2,  (0.8 * globals.HEIGHT) + j * (0.05 * globals.HEIGHT)))
 
             0.8 * globals.HEIGHT
+
+        self.animTime += globals.LT
+        if self.animTime >= DUREE_REP:
+            self.animTime = 0
+            self.i += 1
+            if self.i > len(self.repliques) - 1:
+                self.done = True
+        

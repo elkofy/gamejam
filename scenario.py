@@ -34,7 +34,7 @@ texte = [
             "et vous aurez des réponses",
         ],
         [
-            "??? : Une dernière chose, votre énergie se tarit vite"
+            "??? : Une dernière chose, votre énergie se tarit vite",
             "récupérez les fruits sur votre chemin",
             "sinon vous ne sortirez pas d’ici vivant !"
         ],
