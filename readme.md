@@ -3,7 +3,7 @@
 ## Nécessaire
 - Python
 - pygame : `pip install pygame` ou `python -m pip install pygame`
-- pygame-menu : `pip install pygame-menu` ou `python -m pip install pygame-menu`
+- pygame-menu : `pip install pygame-menu==3.5.6` ou `python -m pip install pygame-menu==3.5.6`
 
 
 ## Lancement
